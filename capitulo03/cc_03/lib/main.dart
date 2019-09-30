@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'constants/application_constants.dart';
 import 'drawer/drawer.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
