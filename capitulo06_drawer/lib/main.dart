@@ -1,5 +1,6 @@
 import 'package:capitulo06_drawer/routes/splash_screen_route.dart';
 import 'package:flutter/material.dart';
+import 'functions/device_functions.dart' as DeviceFunctions;
 
 void main() => runApp(ForcaApp());
 
@@ -20,6 +21,14 @@ class ForcaApp extends StatelessWidget {
 class ForcaHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    DeviceFunctions.Dimensoes.deviceHeight = MediaQuery.of(context).size.height;
+    DeviceFunctions.Dimensoes.deviceWidth = MediaQuery.of(context).size.width;
+    DeviceFunctions.Dimensoes.shortestSide =
+        MediaQuery.of(context).size.shortestSide;
+    DeviceFunctions.Dimensoes.safeAreaTop = MediaQuery.of(context).padding.top;
+    DeviceFunctions.Dimensoes.safeAreaBottom =
+        MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
       body: SplashScreenRoute(),
     );

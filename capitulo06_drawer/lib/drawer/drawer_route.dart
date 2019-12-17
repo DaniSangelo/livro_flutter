@@ -1,34 +1,124 @@
 import 'package:capitulo06_drawer/drawer/widgets/drawerbody_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerbodycontent_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerheader_app.dart';
+import 'package:capitulo06_drawer/widgets/circular_image_widget.dart';
 import 'package:flutter/material.dart';
+import '../functions/device_functions.dart' as DeviceFunctions;
 
-class DrawerRoute extends StatelessWidget {
+class DrawerRoute extends StatefulWidget {
+  @override
+  _DrawerRouteState createState() => _DrawerRouteState();
+}
+
+class _DrawerRouteState extends State<DrawerRoute> {
   bool isExpanded = false;
+  double _width, _heigth, _left, _top, _safeAreaTop, _safeAreaBottom;
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  bool drawerOpen = false;
+  DrawerCallback drawerCallback(bool status) {
+    print("OK");
+    setState(() {
+      drawerOpen = status;
+    });
+  }
+
+  //#region initState
+  @override
+  void initState() {
+    super.initState();
+    _width = DeviceFunctions.Dimensoes.deviceWidth;
+    _heigth = DeviceFunctions.Dimensoes.deviceHeight -
+        DeviceFunctions.Dimensoes.safeAreaBottom;
+    _left = _width - 105;
+    _top = _heigth - 185;
+  }
+  //#endregion
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
+        leading: GestureDetector(
+          child: Icon(Icons.menu),
+          onTap: _handleDrawer,
+        ),
         title: Text(
           "Jogo da Forca",
         ),
         centerTitle: true,
       ),
-      body: Container(),
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-            DrawerHeaderApp(),
-            DrawerBodyApp(
-              child: DrawerBodyContentApp(),
+      body: Stack(
+        children: <Widget>[
+          AnimatedPositioned(
+            top: _top,
+            left: _left,
+            duration: Duration(seconds: 1),
+            child: CircularImageWidget(
+              imageProvider: AssetImage('assets/images/splashscreen.png'),
+              width: 100,
+              heigth: 100,
+//                border: 2,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      drawer: DrawerController(
+        drawerCallback: drawerCallback,
+        alignment: DrawerAlignment.start,
+        child: Container(color: Colors.black),
+//        Drawer(
+//          child: Column(
+//            children: <Widget>[
+//              DrawerHeaderApp(),
+//              DrawerBodyApp(
+//                child: DrawerBodyContentApp(),
+//              ),
+//            ],
+//          ),
+//        ),
       ),
     );
   }
+
+  _handleDrawer() {
+    _scaffoldKey.currentState.openDrawer();
+    print('AQUI');
+    setState(() {
+//      _rigth = (!_scaffoldKey.currentState.isDrawerOpen) ? _width - 105 : 0;
+      _left = 3;
+//      _top = _heigth - _safeAreaTop - 165;
+    });
+  }
 }
+
+//class DrawerRoute extends StatelessWidget {
+//  bool isExpanded = false;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Scaffold(
+//      appBar: AppBar(
+//        title: Text(
+//          "Jogo da Forca",
+//        ),
+//        centerTitle: true,
+//      ),
+//      body: Container(),
+//      drawer: Drawer(
+//        child: Column(
+//          children: <Widget>[
+//            DrawerHeaderApp(),
+//            DrawerBodyApp(
+//              child: DrawerBodyContentApp(),
+//            ),
+//          ],
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 //                  Container(
 //                    // This align moves the children to the bottom

@@ -1,3 +1,4 @@
+import 'package:capitulo06_drawer/widgets/listtile_app_widget.dart';
 import 'package:flutter/material.dart';
 
 class DrawerBodyContentApp extends StatelessWidget {
@@ -21,44 +22,58 @@ class DrawerBodyContentApp extends StatelessWidget {
             ),
             onExpansionChanged: null,
             children: <Widget>[
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 62.0),
-                trailing: Icon(Icons.arrow_forward),
-                title: Text('Novas Palavras'),
-                subtitle: Text("Vamos inserir palavras?"),
-                onTap: () {},
+              ListTileAppWidget(
+                titleText: 'Novas Palavras',
+                subtitleText: 'Vamos inserir palavras?',
               ),
-              ListTile(
-                contentPadding: EdgeInsets.only(left: 62.0),
-                trailing: Icon(Icons.arrow_forward),
-                title: Text('Jogar'),
-                subtitle: Text("Começar a diversão"),
-                onTap: () {},
+              ListTileAppWidget(
+                titleText: 'Palavras existentes',
+                subtitleText: 'Vamos ver as que já temos?',
               ),
+//              _createListTile(
+//                contentPadding: EdgeInsets.only(left: 62.0),
+//                titleText: 'Novas Palavras',
+//                subtitleText: 'Vamos inserir palavras?',
+//              ),
+//              _createListTile(
+//                contentPadding: EdgeInsets.only(left: 62.0),
+//                titleText: 'Palavras existentes',
+//                subtitleText: 'Vamos ver as que já temos?',
+//              ),
             ],
           ),
         ),
-        ListTile(
-          contentPadding: EdgeInsets.only(left: 6.0, top: 0.0),
-          leading: CircleAvatar(
-            backgroundImage: AssetImage('assets/images/drawer/jogar.png'),
-          ),
-          trailing: Icon(Icons.arrow_forward),
-          title: Text('Jogar'),
-          subtitle: Text("Começar a diversão"),
-          onTap: () {},
+        _createListTile(
+          contentPadding: EdgeInsets.only(left: 6.0),
+          titleText: 'Jogar',
+          subtitleText: 'Começar a diversão',
+          avatarImage: AssetImage('assets/images/drawer/jogar.png'),
         ),
-        ListTile(
-          contentPadding: EdgeInsets.only(left: 6.0, top: 0.0),
-          leading: CircleAvatar(
-            backgroundImage: AssetImage('assets/images/drawer/top10.png'),
-          ),
-          trailing: Icon(Icons.arrow_forward),
-          title: Text('Score'),
-          subtitle: Text("Relação dos top 10"),
-          onTap: () {},
+        _createListTile(
+          contentPadding: EdgeInsets.only(left: 6.0),
+          titleText: 'Score',
+          subtitleText: 'Relação dos top 10',
+          avatarImage: AssetImage('assets/images/drawer/top10.png'),
         ),
       ],
+    );
+  }
+
+  ListTile _createListTile({
+    @required EdgeInsets contentPadding,
+    ImageProvider avatarImage,
+    @required String titleText,
+    @required String subtitleText,
+  }) {
+    return ListTile(
+      contentPadding: contentPadding,
+      leading: avatarImage != null
+          ? CircleAvatar(backgroundImage: avatarImage)
+          : null,
+      trailing: Icon(Icons.arrow_forward),
+      title: Text(titleText),
+      subtitle: Text(subtitleText),
+      onTap: () {},
     );
   }
 }
