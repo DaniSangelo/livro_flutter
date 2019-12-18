@@ -1,3 +1,4 @@
+import 'package:capitulo06_drawer/drawer/widgets/drawer_controller_widget.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerbody_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerbodycontent_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerheader_app.dart';
@@ -37,49 +38,83 @@ class _DrawerRouteState extends State<DrawerRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        leading: GestureDetector(
-          child: Icon(Icons.menu),
-          onTap: _handleDrawer,
-        ),
-        title: Text(
-          "Jogo da Forca",
-        ),
-        centerTitle: true,
-      ),
-      body: Stack(
-        children: <Widget>[
-          AnimatedPositioned(
-            top: _top,
-            left: _left,
-            duration: Duration(seconds: 1),
-            child: CircularImageWidget(
-              imageProvider: AssetImage('assets/images/splashscreen.png'),
-              width: 100,
-              heigth: 100,
+    return Material(
+      child: DrawerControllerWidget(
+        body: AnimatedPositioned(
+          top: _top,
+          left: _left,
+          duration: Duration(seconds: 1),
+          child: CircularImageWidget(
+            imageProvider: AssetImage('assets/images/splashscreen.png'),
+            width: 100,
+            heigth: 100,
 //                border: 2,
-            ),
           ),
-        ],
-      ),
-      drawer: DrawerController(
-        drawerCallback: drawerCallback,
-        alignment: DrawerAlignment.start,
-        child: Container(color: Colors.black),
-//        Drawer(
-//          child: Column(
-//            children: <Widget>[
-//              DrawerHeaderApp(),
-//              DrawerBodyApp(
-//                child: DrawerBodyContentApp(),
-//              ),
-//            ],
-//          ),
-//        ),
+        ),
+        drawer: Drawer(
+          child: Column(
+            children: <Widget>[
+              DrawerHeaderApp(),
+              DrawerBodyApp(
+                child: DrawerBodyContentApp(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
+//    return Scaffold(
+//      key: _scaffoldKey,
+//      appBar: AppBar(
+//        leading: GestureDetector(
+//          child: Icon(Icons.menu),
+//          onTap: _handleDrawer,
+//        ),
+//        title: Text(
+//          "Jogo da Forca",
+//        ),
+//        centerTitle: true,
+//      ),
+//      body: Stack(
+//        children: <Widget>[
+//          Material(
+//              child: DrawerControllerWidget(
+//            body: AnimatedPositioned(
+//              top: _top,
+//              left: _left,
+//              duration: Duration(seconds: 1),
+//              child: CircularImageWidget(
+//                imageProvider: AssetImage('assets/images/splashscreen.png'),
+//                width: 100,
+//                heigth: 100,
+////                border: 2,
+//              ),
+//            ),
+//            drawer: Drawer(
+//              child: Column(
+//                children: <Widget>[
+//                  DrawerHeaderApp(),
+//                  DrawerBodyApp(
+//                    child: DrawerBodyContentApp(),
+//                  ),
+//                ],
+//              ),
+//            ),
+//          )),
+//        ],
+//      ),
+//      //https://stackoverflow.com/questions/51891799/how-to-use-drawer-without-scaffold-drawer
+////      drawer: Drawer(
+////        child: Column(
+////          children: <Widget>[
+////            DrawerHeaderApp(),
+////            DrawerBodyApp(
+////              child: DrawerBodyContentApp(),
+////            ),
+////          ],
+////        ),
+////      ),
+//    );
   }
 
   _handleDrawer() {
