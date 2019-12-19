@@ -1,10 +1,13 @@
+import 'package:capitulo06_drawer/drawer/widgets/appbar_widget.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawer_controller_widget.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerbody_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerbodycontent_app.dart';
 import 'package:capitulo06_drawer/drawer/widgets/drawerheader_app.dart';
+import 'package:capitulo06_drawer/scopedmodel/drawer_scoped_model.dart';
 import 'package:capitulo06_drawer/widgets/circular_image_widget.dart';
 import 'package:flutter/material.dart';
 import '../functions/device_functions.dart' as DeviceFunctions;
+import 'package:scoped_model/scoped_model.dart';
 
 class DrawerRoute extends StatefulWidget {
   @override
@@ -13,16 +16,16 @@ class DrawerRoute extends StatefulWidget {
 
 class _DrawerRouteState extends State<DrawerRoute> {
   bool isExpanded = false;
-  double _width, _heigth, _left, _top, _safeAreaTop, _safeAreaBottom;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  double _width, _heigth, _left, _top; //, _safeAreaTop, _safeAreaBottom;
+//  var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  bool drawerOpen = false;
-  DrawerCallback drawerCallback(bool status) {
-    print("OK");
-    setState(() {
-      drawerOpen = status;
-    });
-  }
+//  bool drawerOpen = false;
+//  DrawerCallback drawerCallback(bool status) {
+//    print("OK");
+//    setState(() {
+//      drawerOpen = status;
+//    });
+//  }
 
   //#region initState
   @override
@@ -32,7 +35,7 @@ class _DrawerRouteState extends State<DrawerRoute> {
     _heigth = DeviceFunctions.Dimensoes.deviceHeight -
         DeviceFunctions.Dimensoes.safeAreaBottom;
     _left = _width - 105;
-    _top = _heigth - 185;
+    _top = _heigth - 105;
   }
   //#endregion
 
@@ -40,17 +43,27 @@ class _DrawerRouteState extends State<DrawerRoute> {
   Widget build(BuildContext context) {
     return Material(
       child: DrawerControllerWidget(
-        body: AnimatedPositioned(
-          top: _top,
-          left: _left,
-          duration: Duration(seconds: 1),
-          child: CircularImageWidget(
-            imageProvider: AssetImage('assets/images/splashscreen.png'),
-            width: 100,
-            heigth: 100,
-//                border: 2,
+        appBar: AppBarWidget(
+          widgetToEndOpenDrawer: Icon(Icons.menu),
+          title: Text(
+            "Jogo da Forca",
           ),
+          callbackFunction: _handleDrawer,
         ),
+        body: ScopedModelDescendant<DrawerScopedModel>(
+            builder: (context, child, model) {
+          return AnimatedPositioned(
+            top: _top,
+            left: model.isDrawerOpen ? 3 : _width - 105,
+            duration: Duration(seconds: 1),
+            child: CircularImageWidget(
+              imageProvider: AssetImage('assets/images/splashscreen.png'),
+              width: 100,
+              heigth: 100,
+//                border: 2,
+            ),
+          );
+        }),
         drawer: Drawer(
           child: Column(
             children: <Widget>[
@@ -117,14 +130,17 @@ class _DrawerRouteState extends State<DrawerRoute> {
 //    );
   }
 
-  _handleDrawer() {
-    _scaffoldKey.currentState.openDrawer();
-    print('AQUI');
-    setState(() {
+  _handleDrawer(bool isDrawerOpen) {
+    DrawerScopedModel.of(context)
+        .registerTranstion(statusOfDrawer: isDrawerOpen);
+//    _left = isDrawerOpen ? 3 : _width - 105;
+//    _scaffoldKey.currentState.openDrawer();
+//    print('AQUI');
+//    setState(() {
 //      _rigth = (!_scaffoldKey.currentState.isDrawerOpen) ? _width - 105 : 0;
-      _left = 3;
+//      _left = 3;
 //      _top = _heigth - _safeAreaTop - 165;
-    });
+//    });
   }
 }
 

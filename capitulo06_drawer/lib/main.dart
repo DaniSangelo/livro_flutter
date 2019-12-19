@@ -1,5 +1,7 @@
 import 'package:capitulo06_drawer/routes/splash_screen_route.dart';
+import 'package:capitulo06_drawer/scopedmodel/drawer_scoped_model.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
 
 void main() => runApp(ForcaApp());
@@ -7,13 +9,16 @@ void main() => runApp(ForcaApp());
 class ForcaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Forca da UTFPR',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        backgroundColor: Colors.green,
+    return ScopedModel<DrawerScopedModel>(
+      model: DrawerScopedModel(),
+      child: MaterialApp(
+        title: 'Forca da UTFPR',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          backgroundColor: Colors.green,
+        ),
+        home: ForcaHomePage(),
       ),
-      home: ForcaHomePage(),
     );
   }
 }

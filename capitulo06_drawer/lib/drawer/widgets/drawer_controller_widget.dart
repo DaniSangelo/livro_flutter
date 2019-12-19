@@ -1,30 +1,27 @@
+import 'package:capitulo06_drawer/drawer/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class DrawerControllerWidget extends StatelessWidget {
   final GlobalKey<DrawerControllerState> _drawerKey =
       GlobalKey<DrawerControllerState>();
 
+  final AppBarWidget appBar;
   final Widget body;
   final Drawer drawer;
 
-  DrawerControllerWidget({this.body, this.drawer});
+  DrawerControllerWidget(
+      {@required this.appBar, @required this.body, @required this.drawer});
 
   void openDrawer() {
     _drawerKey.currentState?.open();
   }
 
+  void drawerCallback(bool status) {
+    appBar.callbackFunction(status);
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-//        appBar: AppBar(
-//          leading: GestureDetector(
-//            child: Icon(Icons.menu),
-//            onTap: openDrawer,
-//          ),
-//          title: Text(
-//            "Jogo da Forca",
-//          ),
-//          centerTitle: true,
-//        ),
         body: Stack(
           children: [
             // body
@@ -33,29 +30,29 @@ class DrawerControllerWidget extends StatelessWidget {
               left: 0.0,
               right: 0.0,
               child: AppBar(
-                leading: GestureDetector(
-                  child: Icon(Icons.menu),
-                  onTap: openDrawer,
-                ),
+                automaticallyImplyLeading: appBar.automaticallyImplyLeading,
+                actions: <Widget>[
+                  GestureDetector(
+                      child: Icon(Icons.menu),
+                      onTap: () {
+                        openDrawer();
+                      }),
+                ],
                 title: Text(
                   "Jogo da Forca",
                 ),
                 centerTitle: true,
               ),
             ),
+
             body,
 
             DrawerController(
+              edgeDragWidth: 100,
               key: _drawerKey,
-              alignment: DrawerAlignment.start,
+              alignment: DrawerAlignment.end,
               child: drawer,
-              drawerCallback: (_) {
-                print(_);
-              },
-//        dragStartBehavior: drawerDragStartBehavior,
-              //widget.drawerDragStartBehavior,
-//        scrimColor: drawerScrimColor,
-//        edgeDragWidth: drawerEdgeDragWidth,
+              drawerCallback: (status) => drawerCallback(status),
             ),
           ],
         ),

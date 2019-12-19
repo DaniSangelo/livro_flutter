@@ -9,7 +9,7 @@ class ListTileAppWidget extends StatelessWidget {
   const ListTileAppWidget({
     this.contentPadding =
         const EdgeInsets.only(left: 62.0, top: 0.0, bottom: 8.0),
-    @required this.avatarImage,
+    this.avatarImage,
     @required this.titleText,
     @required this.subtitleText,
   });
