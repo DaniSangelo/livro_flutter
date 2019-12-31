@@ -12,6 +12,7 @@ class ForcaApp extends StatelessWidget {
     return ScopedModel<DrawerScopedModel>(
       model: DrawerScopedModel(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Forca da UTFPR',
         theme: ThemeData(
           primarySwatch: Colors.blue,

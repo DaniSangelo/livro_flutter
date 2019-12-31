@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class DrawerControllerWidget extends StatelessWidget {
   final AppBar appBar;
+  final Widget body;
+  final double topBody;
+  final double leftBody;
+  final Drawer drawer;
 
-  const DrawerControllerWidget({this.appBar});
+  const DrawerControllerWidget(
+      {this.appBar, this.body, this.topBody, this.leftBody, this.drawer});
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -13,7 +18,34 @@ class DrawerControllerWidget extends StatelessWidget {
               top: 0.0,
               left: 0.0,
               right: 0.0,
-              child: (appBar == null) ? AppBar() : appBar,
+              child: (appBar == null)
+                  ? AppBar()
+                  : AppBar(
+                      automaticallyImplyLeading:
+                          appBar.automaticallyImplyLeading,
+                      title: appBar.title,
+                      centerTitle: appBar.centerTitle,
+                      actions: <Widget>[
+                        GestureDetector(
+                          child: appBar.actions[0],
+                        ),
+                      ],
+                    ),
+            ),
+//            ),
+            (this.topBody != null || this.leftBody != null)
+                ? Positioned(
+                    top: this.topBody != null ? this.topBody : null,
+                    left: this.leftBody != null ? this.leftBody : null,
+                    child: (body == null) ? Container() : body,
+                  )
+                : body,
+            DrawerController(
+//              edgeDragWidth: 100,
+//              key: _drawerKey,
+              alignment: DrawerAlignment.end,
+              child: drawer != null ? drawer : Container(),
+//              drawerCallback: (status) => drawerCallback(status),
             ),
           ],
         ),

@@ -16,8 +16,8 @@ class DrawerRoute extends StatefulWidget {
 }
 
 class _DrawerRouteState extends State<DrawerRoute> {
-  bool isExpanded = false;
-  double _width, _heigth, _left, _top; //, _safeAreaTop, _safeAreaBottom;
+//  bool isExpanded = false;
+//  double _width, _heigth, _left, _top; //, _safeAreaTop, _safeAreaBottom;
 //  var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 //  bool drawerOpen = false;
@@ -28,17 +28,17 @@ class _DrawerRouteState extends State<DrawerRoute> {
 //    });
 //  }
 
-  //#region initState
-  @override
-  void initState() {
-    super.initState();
-    _width = DeviceFunctions.Dimensoes.deviceWidth;
-    _heigth = DeviceFunctions.Dimensoes.deviceHeight -
-        DeviceFunctions.Dimensoes.safeAreaBottom;
-    _left = _width - 105;
-    _top = _heigth - 105;
-  }
-  //#endregion
+//  //#region initState
+//  @override
+//  void initState() {
+//    super.initState();
+//    _width = DeviceFunctions.Dimensoes.deviceWidth;
+//    _heigth = DeviceFunctions.Dimensoes.deviceHeight -
+//        DeviceFunctions.Dimensoes.safeAreaBottom;
+//    _left = _width - 105;
+//    _top = _heigth - 105;
+//  }
+//  //#endregion
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,40 @@ class _DrawerRouteState extends State<DrawerRoute> {
         title: Text('Jogo da Forca'),
         centerTitle: true,
         actions: <Widget>[
-          Icon(Icons.menu),
+          Icon(
+            Icons.menu,
+            size: 40,
+          ),
         ],
       ),
+      topBody: MediaQuery.of(context).size.height - 105,
+      leftBody: MediaQuery.of(context).size.width - 105,
+      body: CircularImageWidget(
+        imageProvider: AssetImage('assets/images/splashscreen.png'),
+        width: 100,
+        heigth: 100,
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            DrawerHeaderApp(),
+            DrawerBodyApp(
+              child: DrawerBodyContentApp(),
+            ),
+          ],
+        ),
+      ),
+
+//      Positioned(
+//        top: MediaQuery.of(context).size.height - 105,
+//        left: MediaQuery.of(context).size.width - 105,
+//        child: CircularImageWidget(
+//          imageProvider: AssetImage('assets/images/splashscreen.png'),
+//          width: 100,
+//          heigth: 100,
+//        ),
+//      ),
+
 //      appBar: AppBarWidget(
 //        widgetToEndOpenDrawer: Icon(Icons.menu),
 //        title: Text(
