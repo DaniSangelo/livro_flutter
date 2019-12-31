@@ -7,8 +7,15 @@ class DrawerControllerWidget extends StatelessWidget {
   final double leftBody;
   final Drawer drawer;
 
-  const DrawerControllerWidget(
+  DrawerControllerWidget(
       {this.appBar, this.body, this.topBody, this.leftBody, this.drawer});
+
+  GlobalKey<DrawerControllerState> drawerKey =
+      GlobalKey<DrawerControllerState>();
+
+  void openDrawer() {
+    drawerKey.currentState.open();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -28,6 +35,7 @@ class DrawerControllerWidget extends StatelessWidget {
                       actions: <Widget>[
                         GestureDetector(
                           child: appBar.actions[0],
+                          onTap: () => openDrawer(),
                         ),
                       ],
                     ),
@@ -42,7 +50,7 @@ class DrawerControllerWidget extends StatelessWidget {
                 : body,
             DrawerController(
 //              edgeDragWidth: 100,
-//              key: _drawerKey,
+              key: drawerKey,
               alignment: DrawerAlignment.end,
               child: drawer != null ? drawer : Container(),
 //              drawerCallback: (status) => drawerCallback(status),
