@@ -6,15 +6,25 @@ class DrawerControllerWidget extends StatelessWidget {
   final double topBody;
   final double leftBody;
   final Drawer drawer;
+  final Function callbackFunction;
 
   DrawerControllerWidget(
-      {this.appBar, this.body, this.topBody, this.leftBody, this.drawer});
+      {this.appBar,
+      this.body,
+      this.topBody,
+      this.leftBody,
+      this.drawer,
+      this.callbackFunction});
 
   GlobalKey<DrawerControllerState> drawerKey =
       GlobalKey<DrawerControllerState>();
 
   void openDrawer() {
     drawerKey.currentState.open();
+  }
+
+  void drawerCallback(bool status) {
+    callbackFunction(status);
   }
 
   @override
@@ -42,7 +52,8 @@ class DrawerControllerWidget extends StatelessWidget {
             ),
 //            ),
             (this.topBody != null || this.leftBody != null)
-                ? Positioned(
+                ? AnimatedPositioned(
+                    duration: Duration(seconds: 1),
                     top: this.topBody != null ? this.topBody : null,
                     left: this.leftBody != null ? this.leftBody : null,
                     child: (body == null) ? Container() : body,
@@ -53,7 +64,7 @@ class DrawerControllerWidget extends StatelessWidget {
               key: drawerKey,
               alignment: DrawerAlignment.end,
               child: drawer != null ? drawer : Container(),
-//              drawerCallback: (status) => drawerCallback(status),
+              drawerCallback: (status) => drawerCallback(status),
             ),
           ],
         ),

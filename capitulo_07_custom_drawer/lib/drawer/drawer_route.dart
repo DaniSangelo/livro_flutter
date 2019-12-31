@@ -40,6 +40,25 @@ class _DrawerRouteState extends State<DrawerRoute> {
 //  }
 //  //#endregion
 
+  bool _drawerIsOpen = false;
+
+  double _topBody() {
+    return MediaQuery.of(context).size.height - 105;
+  }
+
+  double _leftBody() {
+    if (!_drawerIsOpen)
+      return MediaQuery.of(context).size.width - 105;
+    else
+      return 5;
+  }
+
+  _handleDrawer(bool drawerIsOpen) {
+    setState(() {
+      this._drawerIsOpen = drawerIsOpen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DrawerControllerWidget(
@@ -54,8 +73,8 @@ class _DrawerRouteState extends State<DrawerRoute> {
           ),
         ],
       ),
-      topBody: MediaQuery.of(context).size.height - 105,
-      leftBody: MediaQuery.of(context).size.width - 105,
+      topBody: _topBody(),
+      leftBody: _leftBody(),
       body: CircularImageWidget(
         imageProvider: AssetImage('assets/images/splashscreen.png'),
         width: 100,
@@ -71,6 +90,7 @@ class _DrawerRouteState extends State<DrawerRoute> {
           ],
         ),
       ),
+      callbackFunction: _handleDrawer,
 
 //      Positioned(
 //        top: MediaQuery.of(context).size.height - 105,
@@ -168,18 +188,18 @@ class _DrawerRouteState extends State<DrawerRoute> {
 //    );
   }
 
-  _handleDrawer(bool isDrawerOpen) {
-    DrawerScopedModel.of(context)
-        .registerTranstion(statusOfDrawer: isDrawerOpen);
-//    _left = isDrawerOpen ? 3 : _width - 105;
-//    _scaffoldKey.currentState.openDrawer();
-//    print('AQUI');
-//    setState(() {
-//      _rigth = (!_scaffoldKey.currentState.isDrawerOpen) ? _width - 105 : 0;
-//      _left = 3;
-//      _top = _heigth - _safeAreaTop - 165;
-//    });
-  }
+//  _handleDrawer(bool isDrawerOpen) {
+//    DrawerScopedModel.of(context)
+//        .registerTranstion(statusOfDrawer: isDrawerOpen);
+////    _left = isDrawerOpen ? 3 : _width - 105;
+////    _scaffoldKey.currentState.openDrawer();
+////    print('AQUI');
+////    setState(() {
+////      _rigth = (!_scaffoldKey.currentState.isDrawerOpen) ? _width - 105 : 0;
+////      _left = 3;
+////      _top = _heigth - _safeAreaTop - 165;
+////    });
+//  }
 }
 
 //class _DrawerRouteState extends State<DrawerRoute> {
