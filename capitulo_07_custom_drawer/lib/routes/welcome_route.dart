@@ -2,8 +2,6 @@ import 'package:capitulo07_custom_drawer/drawer/drawer_route.dart';
 import 'package:capitulo07_custom_drawer/shared_preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 
-import 'home_route.dart';
-
 class WelcomeRoute extends StatefulWidget {
   @override
   _WelcomeRouteState createState() => _WelcomeRouteState();

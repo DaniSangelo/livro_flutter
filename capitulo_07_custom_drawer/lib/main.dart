@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'drawer/blocs/drawer_open_state_bloc.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
 import 'routes/splash_screen_route.dart';
-import 'scopedmodel/drawer_scoped_model.dart';
 
-void main() => runApp(ForcaApp());
+void main() => runApp(
+      MultiBlocProvider(providers: [
+        BlocProvider<DrawerOpenStateBloc>(
+          create: (BuildContext context) => DrawerOpenStateBloc(),
+        ),
+      ], child: ForcaApp()),
+    );
 
 class ForcaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<DrawerScopedModel>(
-      model: DrawerScopedModel(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Forca da UTFPR',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          backgroundColor: Colors.green,
-        ),
-        home: ForcaHomePage(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Forca da UTFPR',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        backgroundColor: Colors.green,
       ),
+      home: ForcaHomePage(),
     );
   }
 }
