@@ -1,8 +1,7 @@
-import 'package:capitulo08_rotas_e_transicoes/mixins/widgets_mixin.dart';
-import 'package:capitulo08_rotas_e_transicoes/widgets/container_iluminado_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:capitulo08_rotas_e_transicoes/mixins/widgets_mixin.dart';
+import 'package:capitulo08_rotas_e_transicoes/widgets/container_iluminado_widget.dart';
 import 'bloc/palavras_crud_bloc.dart';
 
 class PalavrasCRUDRoute extends StatefulWidget {
@@ -13,7 +12,7 @@ class PalavrasCRUDRoute extends StatefulWidget {
 class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
     with TextFormFieldMixin {
   //#region Variáveis
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _palavraController = TextEditingController();
   final _ajudaController = TextEditingController();
   final FocusNode _palavraFocus = FocusNode();
@@ -55,7 +54,7 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
   //#region _form
   Widget _form(PalavrasCrudFormState formState) {
     return Form(
-      key: this._formKey,
+//      key: this._formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
