@@ -1,5 +1,7 @@
+import 'package:capitulo08_rotas_e_transicoes/routes/palavras/bloc/palavras_crud_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'apphelpers/app-router.dart';
 import 'drawer/blocs/drawer_open_state_bloc.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
 import 'routes/splash_screen_route.dart';
@@ -9,6 +11,9 @@ void main() => runApp(
         BlocProvider<DrawerOpenStateBloc>(
           create: (BuildContext context) => DrawerOpenStateBloc(),
         ),
+        BlocProvider<PalavrasCrudFormBloc>(
+          create: (BuildContext context) => PalavrasCrudFormBloc(),
+        ),
       ], child: ForcaApp()),
     );
 
@@ -16,6 +21,7 @@ class ForcaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: AppRouter.generateRoute,
       debugShowCheckedModeBanner: false,
       title: 'Forca da UTFPR',
       theme: ThemeData(
