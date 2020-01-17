@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^0.1.2
+
   shared_preferences: ^0.5.4+3
   flutter_bloc: ^3.0.0
 
