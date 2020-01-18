@@ -1,3 +1,6 @@
+import 'file:///C:/Users/Everton/Documents/GitHub/livro_flutter/capitulo08_rotas_e_transicoes/lib/widgets/dialogs/success_dialog_widget.dart';
+import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/actions_flatbutton_to_alertdialog_widget.dart';
+import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/information_alert_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:capitulo08_rotas_e_transicoes/mixins/widgets_mixin.dart';
@@ -37,6 +40,14 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
                 padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                 child: BlocBuilder<PalavrasCrudFormBloc, PalavrasCrudFormState>(
                     builder: (context, formState) {
+//                    return SuccessDialogWidget(
+//                      onDismissed: () {
+//                        _palavraController.clear();
+//                        _ajudaController.clear();
+//                        this._palavrasCrudFormBloc.add(FormReset());
+//                      },
+//                    );
+//                  }
                   return _form(formState);
                 }),
               ),
@@ -101,8 +112,28 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
     _palavrasCrudFormBloc.add(AjudaChanged(help: this._ajudaController.text));
   }
 
-  void _onSubmitPressed() {
+  void _onSubmitPressed() async {
     _palavrasCrudFormBloc.add(FormSuccessSubmitted());
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      child: InformationAlertDialogWidget(
+        iconTitle: Icon(
+          Icons.check,
+          color: Colors.red,
+        ),
+        title: 'Tudo certo',
+        message: 'Os dados informados foram registrados com sucesso.',
+        buttons: [
+          ActionsFlatButtonToAlertDialogWidget(
+            messageButton: 'OK',
+          )
+        ],
+      ),
+    );
+    _palavraController.clear();
+    _ajudaController.clear();
+    this._palavrasCrudFormBloc.add(FormReset());
   }
 
   //#region initState
