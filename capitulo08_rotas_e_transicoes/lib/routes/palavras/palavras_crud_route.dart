@@ -32,7 +32,7 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
             child: ContainerIluminadoWidget(
               backgroundColor: Colors.white,
               shadowColor: Colors.white70,
-              height: 270,
+              height: 350,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                 child: BlocBuilder<PalavrasCrudFormBloc, PalavrasCrudFormState>(
@@ -72,6 +72,7 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
             height: 20,
           ),
           textFormField(
+              maxLines: 5,
               focusNode: this._ajudaFocus,
               controller: this._ajudaController,
               labelText: 'Ajuda',
