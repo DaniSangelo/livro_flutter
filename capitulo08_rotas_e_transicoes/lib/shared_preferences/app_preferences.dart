@@ -1,4 +1,4 @@
-import 'package:capitulo08_rotas_e_transicoes/app_constants/shared_preferences_constants.dart';
+import 'package:capitulo08_rotas_e_transicoes/appconstants/shared_preferences_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

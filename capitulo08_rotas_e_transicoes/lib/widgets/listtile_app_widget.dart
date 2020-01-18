@@ -19,45 +19,45 @@ class ListTileAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: contentPadding,
-      child: Row(
-        children: <Widget>[
-          (avatarImage == null)
-              ? Container(
-                  width: 0,
-                )
-              : Container(
-                  width: 30.0,
-                  height: 30.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: avatarImage,
-                      fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: this.onTap,
+        child: Row(
+          children: <Widget>[
+            (avatarImage == null)
+                ? Container(
+                    width: 0,
+                  )
+                : Container(
+                    width: 30.0,
+                    height: 30.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: avatarImage,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(titleText),
-                Text(
-                  subtitleText,
-                  style: TextStyle(
-                    fontSize: 10.0,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(titleText),
+                  Text(
+                    subtitleText,
+                    style: TextStyle(
+                      fontSize: 10.0,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          GestureDetector(
-            child: Icon(
+            Icon(
               Icons.arrow_forward,
               color: Colors.black38,
-            ),
-            onTap: () => onTap(),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

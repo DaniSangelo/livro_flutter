@@ -1,4 +1,4 @@
-import 'package:capitulo08_rotas_e_transicoes/app_constants/router_constants.dart';
+import 'package:capitulo08_rotas_e_transicoes/appconstants/router_constants.dart';
 import 'package:capitulo08_rotas_e_transicoes/routes/palavras/palavras_crud_route.dart';
 import 'package:flutter/material.dart';
 
