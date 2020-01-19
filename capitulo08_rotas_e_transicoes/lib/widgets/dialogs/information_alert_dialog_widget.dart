@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'information_cupertino_alert_dialog_widget.dart';
 
 class InformationAlertDialogWidget extends StatelessWidget {
-  final Icon iconTitle;
   final String title;
   final String message;
   final List<Widget> actions;
 
   const InformationAlertDialogWidget({
-    this.iconTitle,
     @required this.title,
     @required this.message,
     @required this.actions,
@@ -21,10 +19,9 @@ class InformationAlertDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return (Platform.isAndroid)
         ? InformationMaterialAlertDialogWidget(
-            iconTitle: iconTitle,
             title: title,
             message: message,
-            buttons: actions,
+            actions: actions,
           )
         : InformationCupertinoAlertDialogWidget(
             title: title,

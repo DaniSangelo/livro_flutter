@@ -18,9 +18,7 @@ class ActionsFlatButtonToAlertDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return (Platform.isAndroid)
         ? FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop(this.messageButton);
-            },
+            onPressed: () => Navigator.of(context).pop(this.messageButton),
             child: Text(
               this.messageButton,
             ),
@@ -29,6 +27,7 @@ class ActionsFlatButtonToAlertDialogWidget extends StatelessWidget {
             isDefaultAction: this.isDestructiveAction,
             isDestructiveAction: this.isDestructiveAction,
             child: Text(this.messageButton),
-            onPressed: () => Navigator.of(context).pop(this.messageButton));
+            onPressed: () => Navigator.of(context).pop(this.messageButton),
+          );
   }
 }

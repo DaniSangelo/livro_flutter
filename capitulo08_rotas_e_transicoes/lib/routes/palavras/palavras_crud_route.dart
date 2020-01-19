@@ -1,5 +1,6 @@
 import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/actions_flatbutton_to_alertdialog_widget.dart';
 import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/information_alert_dialog_widget.dart';
+import 'package:capitulo08_rotas_e_transicoes/widgets/raisedbutton_with_snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:capitulo08_rotas_e_transicoes/mixins/widgets_mixin.dart';
@@ -92,16 +93,26 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
           SizedBox(
             height: 20,
           ),
-          RaisedButton(
-            onPressed: formState.isFormValid
-                ? () async {
-                    _onSubmitPressed();
-                    await _successDialog();
-                    _resetForm();
-                  }
-                : null,
-            child: Text('Gravar'),
+          RaisedButtonWithSnackbarWidget(
+            onPressedVisible: formState.isFormValid,
+            buttonText: 'Gravar',
           ),
+//          Builder(builder: (buildContextToRaisedButton) {
+//            return RaisedButton(
+//              onPressed: formState.isFormValid
+//                  ? () async {
+//                      Scaffold.of(context).showSnackBar(SnackBar(
+//                        content: Text('Button moved to separate widget'),
+//                        duration: Duration(seconds: 3),
+//                      ));
+//                      _onSubmitPressed();
+////                    await _successDialog();
+//                      _resetForm();
+//                    }
+//                  : null,
+//              child: Text('Gravar'),
+//            );
+//          }),
         ],
       ),
     );
@@ -126,17 +137,13 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
       barrierDismissible: false,
       context: context,
       child: InformationAlertDialogWidget(
-        iconTitle: Icon(
-          Icons.check,
-          color: Colors.red,
-        ),
         title: 'Tudo certo',
         message: 'Os dados informados foram registrados com sucesso.',
         actions: [
           ActionsFlatButtonToAlertDialogWidget(
             messageButton: 'OK',
+            isDefaultAction: true,
           ),
-
         ],
       ),
     );
