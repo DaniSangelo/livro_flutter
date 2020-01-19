@@ -9,13 +9,13 @@ class InformationAlertDialogWidget extends StatelessWidget {
   final Icon iconTitle;
   final String title;
   final String message;
-  final List<Widget> buttons;
+  final List<Widget> actions;
 
   const InformationAlertDialogWidget({
     this.iconTitle,
     @required this.title,
     @required this.message,
-    @required this.buttons,
+    @required this.actions,
   });
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,12 @@ class InformationAlertDialogWidget extends StatelessWidget {
             iconTitle: iconTitle,
             title: title,
             message: message,
-            buttons: buttons,
+            buttons: actions,
           )
         : InformationCupertinoAlertDialogDialog(
-            iconTitle: iconTitle,
             title: title,
             message: message,
-            buttons: buttons,
+            actions: actions,
           );
   }
 }

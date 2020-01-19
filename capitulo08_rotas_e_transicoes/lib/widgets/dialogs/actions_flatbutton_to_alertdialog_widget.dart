@@ -1,41 +1,34 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActionsFlatButtonToAlertDialogWidget extends StatelessWidget {
   final String messageButton;
-  final TextStyle textStyleMessageButton;
-  final Icon iconButton;
+  final bool isDefaultAction;
+  final bool isDestructiveAction;
 
   const ActionsFlatButtonToAlertDialogWidget({
-    this.messageButton,
-    this.textStyleMessageButton = const TextStyle(color: Colors.black),
-    this.iconButton,
-  }) : assert(messageButton != null || iconButton != null);
+    @required this.messageButton,
+    this.isDefaultAction = false,
+    this.isDestructiveAction = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        onPressed: () {
-          Navigator.of(context)
-              .pop(this.messageButton ?? this.iconButton.icon.toString());
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
+    return (Platform.isAndroid)
+        ? FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(this.messageButton);
+            },
+            child: Text(
               this.messageButton,
-              style: this.textStyleMessageButton,
             ),
-            (this.iconButton != null)
-                ? SizedBox(width: 5)
-                : SizedBox(
-                    width: 0,
-                  ),
-            (this.iconButton != null)
-                ? this.iconButton
-                : SizedBox(
-                    width: 0,
-                  ),
-          ],
-        ));
+          )
+        : CupertinoDialogAction(
+            isDefaultAction: this.isDestructiveAction,
+            isDestructiveAction: this.isDestructiveAction,
+            child: Text(this.messageButton),
+            onPressed: () => Navigator.of(context).pop(this.messageButton));
   }
 }

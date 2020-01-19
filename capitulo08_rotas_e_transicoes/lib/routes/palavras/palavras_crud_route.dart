@@ -133,7 +133,7 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
         ),
         title: 'Tudo certo',
         message: 'Os dados informados foram registrados com sucesso.',
-        buttons: [
+        actions: [
           ActionsFlatButtonToAlertDialogWidget(
             messageButton: 'OK',
           )
