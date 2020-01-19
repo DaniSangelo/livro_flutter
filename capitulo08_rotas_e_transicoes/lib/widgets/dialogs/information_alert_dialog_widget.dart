@@ -26,7 +26,7 @@ class InformationAlertDialogWidget extends StatelessWidget {
             message: message,
             buttons: actions,
           )
-        : InformationCupertinoAlertDialogDialog(
+        : InformationCupertinoAlertDialogWidget(
             title: title,
             message: message,
             actions: actions,
