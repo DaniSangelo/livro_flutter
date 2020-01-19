@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class InformationCupertinoAlertDialogDialog extends StatelessWidget {
+class InformationCupertinoAlertDialogWidget extends StatelessWidget {
   final String title;
   final String message;
   final List<Widget> actions;
 
-  const InformationCupertinoAlertDialogDialog({
+  const InformationCupertinoAlertDialogWidget({
     @required this.title,
     @required this.message,
     @required this.actions,
