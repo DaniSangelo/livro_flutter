@@ -15,7 +15,12 @@ class InformationCupertinoAlertDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: Text(this.title),
+      title: Column(
+        children: <Widget>[
+          Text(this.title),
+          SizedBox(height: 20,),
+        ],
+      ),
       content: Text(this.message),
       actions: actions,
     );
