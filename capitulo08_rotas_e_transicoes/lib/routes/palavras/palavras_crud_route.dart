@@ -94,7 +94,13 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
             height: 20,
           ),
           RaisedButton(
-            onPressed: formState.isFormValid ? _onSubmitPressed : null,
+            onPressed: formState.isFormValid
+                ? () async {
+                    _onSubmitPressed();
+                    await _successDialog();
+                    _resetForm();
+                  }
+                : null,
             child: Text('Gravar'),
           ),
         ],
@@ -114,6 +120,9 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
 
   void _onSubmitPressed() async {
     _palavrasCrudFormBloc.add(FormSuccessSubmitted());
+  }
+
+  _successDialog() async {
     await showDialog(
       barrierDismissible: false,
       context: context,
@@ -131,6 +140,9 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
         ],
       ),
     );
+  }
+
+  _resetForm() {
     _palavraController.clear();
     _ajudaController.clear();
     this._palavrasCrudFormBloc.add(FormReset());

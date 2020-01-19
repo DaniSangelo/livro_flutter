@@ -39,7 +39,10 @@ class InformationCupertinoAlertDialogDialog extends StatelessWidget {
           SizedBox(
             height: 25,
           ),
-          Text(this.message),
+          Text(
+            this.message,
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
       actions: buttons,
