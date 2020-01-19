@@ -1,4 +1,3 @@
-import 'file:///C:/Users/Everton/Documents/GitHub/livro_flutter/capitulo08_rotas_e_transicoes/lib/widgets/dialogs/success_dialog_widget.dart';
 import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/actions_flatbutton_to_alertdialog_widget.dart';
 import 'package:capitulo08_rotas_e_transicoes/widgets/dialogs/information_alert_dialog_widget.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +135,8 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
         actions: [
           ActionsFlatButtonToAlertDialogWidget(
             messageButton: 'OK',
-          )
+          ),
+
         ],
       ),
     );
