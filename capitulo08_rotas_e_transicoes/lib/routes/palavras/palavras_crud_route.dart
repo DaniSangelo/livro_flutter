@@ -96,23 +96,11 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
           RaisedButtonWithSnackbarWidget(
             onPressedVisible: formState.isFormValid,
             buttonText: 'Gravar',
+            textToSnackBar:
+                'Os dados informados foram registrados com sucesso.',
+            onButtonPressed: _onSubmitPressed,
+            onStackBarClosed: _resetForm,
           ),
-//          Builder(builder: (buildContextToRaisedButton) {
-//            return RaisedButton(
-//              onPressed: formState.isFormValid
-//                  ? () async {
-//                      Scaffold.of(context).showSnackBar(SnackBar(
-//                        content: Text('Button moved to separate widget'),
-//                        duration: Duration(seconds: 3),
-//                      ));
-//                      _onSubmitPressed();
-////                    await _successDialog();
-//                      _resetForm();
-//                    }
-//                  : null,
-//              child: Text('Gravar'),
-//            );
-//          }),
         ],
       ),
     );
