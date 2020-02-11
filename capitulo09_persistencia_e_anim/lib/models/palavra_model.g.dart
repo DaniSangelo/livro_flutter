@@ -8,7 +8,7 @@ part of 'palavra_model.dart';
 
 PalavraModel _$PalavraModelFromJson(Map<String, dynamic> json) {
   return PalavraModel(
-    palavraId: json['palavraId'] as String,
+    palavraID: json['palavraID'] as String,
     palavra: json['palavra'] as String,
     ajuda: json['ajuda'] as String,
   );
@@ -16,7 +16,7 @@ PalavraModel _$PalavraModelFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$PalavraModelToJson(PalavraModel instance) =>
     <String, dynamic>{
-      'palavraId': instance.palavraId,
+      'palavraID': instance.palavraID,
       'palavra': instance.palavra,
       'ajuda': instance.ajuda,
     };

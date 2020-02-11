@@ -1,4 +1,6 @@
+import 'package:capitulo09_persistencia_e_anim/local_persistence/daos/palavra_dao.dart';
 import 'package:capitulo09_persistencia_e_anim/mixins/widgets_mixin.dart';
+import 'package:capitulo09_persistencia_e_anim/models/palavra_model.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/container_iluminado_widget.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/dialogs/actions_flatbutton_to_alertdialog_widget.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/dialogs/information_alert_dialog_widget.dart';
@@ -96,8 +98,9 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
           RaisedButtonWithSnackbarWidget(
             onPressedVisible: formState.isFormValid,
             buttonText: 'Gravar',
-            textToSnackBar:
+            successTextToSnackBar:
                 'Os dados informados foram registrados com sucesso.',
+            failTextToSnackBar: 'Erro na inserção',
             onButtonPressed: _onSubmitPressed,
             onStackBarClosed: _resetForm,
           ),
@@ -117,7 +120,17 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
   }
 
   void _onSubmitPressed() async {
-    _palavrasCrudFormBloc.add(FormSuccessSubmitted());
+    PalavraDAO palavraDAO = PalavraDAO();
+    PalavraModel palavraModel = PalavraModel(
+        palavra: this._palavraController.text,
+        ajuda: this._ajudaController.text);
+
+    try {
+      await palavraDAO.insert(palavraModel: palavraModel);
+      _palavrasCrudFormBloc.add(FormSuccessSubmitted());
+    } catch (e) {
+      rethrow;
+    }
   }
 
   _successDialog() async {

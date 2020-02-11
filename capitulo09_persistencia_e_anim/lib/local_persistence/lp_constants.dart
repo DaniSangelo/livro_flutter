@@ -1,2 +1,4 @@
 const kDatabaseName = "jogodaforca.db";
-const kDatabaseVersion = 1;
+const kDatabaseVersion = 3;
+
+const kPalavrasTableName = "tb_palavras";

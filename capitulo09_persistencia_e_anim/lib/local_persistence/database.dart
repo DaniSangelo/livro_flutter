@@ -44,7 +44,53 @@ class SQFLiteDataBase {
   }
 
   Future _nUpgradeDb(
-      Database database, int previousVersion, int newVersion) async {}
+      Database database, int previousVersion, int newVersion) async {
+    print('newVersion -> $newVersion');
+    if (newVersion == 2) {
+      _upgradeToVersion2(database, previousVersion, newVersion);
+    } else if (newVersion == 3) {
+      _upgradeToVersion3(database, previousVersion, newVersion);
+//    } else if (newVersion == 4) {
+//      _upgradeToVersion4(database, previousVersion, newVersion);
+    }
+  }
+
+  _upgradeToVersion2(
+      Database database, int previousVersion, int newVersion) async {
+    await database.execute("CREATE TABLE tb_palavras ("
+        "disciplinaID TEXT PRIMARY KEY,"
+        "palavra TEXT,"
+        "ajuda TEXT"
+        ")");
+    await database.execute("DROP TABLE disciplinas");
+  }
+
+  _upgradeToVersion3(
+      Database database, int previousVersion, int newVersion) async {
+    if (previousVersion == 1)
+      _upgradeToVersion2(database, previousVersion, newVersion);
+
+    await database.execute("DROP TABLE tb_palavras");
+    await database.execute("CREATE TABLE tb_palavras ("
+        "palavraID TEXT PRIMARY KEY,"
+        "palavra TEXT,"
+        "ajuda TEXT"
+        ")");
+  }
+
+//  _upgradeToVersion4(
+//      Database database, int previousVersion, int newVersion) async {
+//    if (previousVersion >= 3)
+//      _upgradeToVersion2(database, previousVersion, newVersion);
+//
+//    await database.execute("DROP TABLE tb_palavras");
+//    await database.execute("CREATE TABLE tb_palavras ("
+//        "palavraID TEXT PRIMARY KEY,"
+//        "palavra TEXT,"
+//        "ajuda TEXT"
+//        ")");
+//  }
+
   Future _onDowngradeDb(
       Database database, int previousVersion, int newVersion) async {}
 }

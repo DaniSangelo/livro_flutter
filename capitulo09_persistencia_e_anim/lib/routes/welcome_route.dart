@@ -1,5 +1,5 @@
-import 'package:capitulo08_rotas_e_transicoes/drawer/drawer_route.dart';
-import 'package:capitulo08_rotas_e_transicoes/shared_preferences/app_preferences.dart';
+import 'package:capitulo09_persistencia_e_anim/drawer/drawer_route.dart';
+import 'package:capitulo09_persistencia_e_anim/shared_preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeRoute extends StatefulWidget {
