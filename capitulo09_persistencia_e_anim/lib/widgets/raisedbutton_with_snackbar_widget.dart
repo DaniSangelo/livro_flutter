@@ -22,35 +22,39 @@ class RaisedButtonWithSnackbarWidget extends StatelessWidget {
       child: Text(this.buttonText),
       onPressed: this.onPressedVisible
           ? () async {
-              String textToSnackBar = this.successTextToSnackBar;
-              bool success = true;
-              FocusScope.of(context).unfocus();
-              try {
-                await this.onButtonPressed();
-              } catch (e) {
-                textToSnackBar = this.failTextToSnackBar + ': ' + e.toString();
-                success = false;
-              }
-
-              Scaffold.of(context)
-                  .showSnackBar(
-                    SnackBar(
-                      backgroundColor: (success) ? Colors.indigo : Colors.red,
-                      content: Text(
-                        textToSnackBar,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: (success) ? 14 : 16,
-                        ),
-                      ),
-                      duration: Duration(seconds: (success) ? 3 : 5),
-                    ),
-                  )
-                  .closed
-                  .then((_) => (success) ? this.onStackBarClosed() : () {});
+              await _onPressedRaisedButton(context);
             }
           : null,
     );
+  }
+
+  _onPressedRaisedButton(BuildContext buildContext) async {
+    String textToSnackBar = this.successTextToSnackBar;
+    bool success = true;
+    FocusScope.of(buildContext).unfocus();
+    try {
+      await this.onButtonPressed();
+    } catch (e) {
+      textToSnackBar = this.failTextToSnackBar + ': ' + e.toString();
+      success = false;
+    }
+
+    Scaffold.of(buildContext)
+        .showSnackBar(
+          SnackBar(
+            backgroundColor: (success) ? Colors.indigo : Colors.red,
+            content: Text(
+              textToSnackBar,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: (success) ? 14 : 16,
+              ),
+            ),
+            duration: Duration(seconds: (success) ? 3 : 5),
+          ),
+        )
+        .closed
+        .then((_) => (success) ? this.onStackBarClosed() : () {});
   }
 }

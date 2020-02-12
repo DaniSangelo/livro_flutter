@@ -18,7 +18,7 @@ class PalavraDAO {
       var recordsAffected =
           await lpDatabase.insert(kPalavrasTableName, palavraModel.toJson());
       if (recordsAffected == 0) result = null;
-    } catch (exception, stackTrace) {
+    } catch (exception) {
       rethrow;
     }
     return result;
