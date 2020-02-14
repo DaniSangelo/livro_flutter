@@ -1,4 +1,4 @@
-import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/palavras_crud_form_bloc.dart';
+import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/crud/palavras_crud_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'apphelpers/app_router.dart';
