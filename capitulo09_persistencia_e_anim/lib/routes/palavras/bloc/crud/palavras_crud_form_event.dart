@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 abstract class PalavrasCrudFormEvent {
   const PalavrasCrudFormEvent();

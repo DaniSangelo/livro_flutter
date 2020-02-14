@@ -7,7 +7,7 @@ import 'package:capitulo09_persistencia_e_anim/widgets/dialogs/information_alert
 import 'package:capitulo09_persistencia_e_anim/widgets/raisedbutton_with_snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/palavras_crud_bloc.dart';
+import 'bloc/crud/palavras_crud_bloc.dart';
 
 class PalavrasCRUDRoute extends StatefulWidget {
   @override
