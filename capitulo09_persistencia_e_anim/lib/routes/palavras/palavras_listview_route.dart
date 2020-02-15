@@ -1,8 +1,12 @@
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/listview/palavras_listview_bloc.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/mixin/palavras_listview_mixin.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/widgets/palavras_listtile_widget.dart';
+import 'package:dialog_information_to_specific_platform/dialog_information_to_specific_platform.dart';
+import 'package:dialog_information_to_specific_platform/flat_buttons/actions_flatbutton_to_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/bottom_loader_widget.dart';
 
 class PalavrasListViewRoute extends StatefulWidget {
   @override
@@ -43,7 +47,6 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
       ),
       body: BlocBuilder<PalavrasListViewBloc, PalavrasListViewBlocState>(
           builder: (context, state) {
-        print('state -> $state');
         if (state is PalavrasListViewBlocError) {
           return centerText(
               text: 'Falha ao recuperar palavras: ${state.errorMessage}');
@@ -71,10 +74,36 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
                 : state.palavras.length + 1,
             controller: _scrollController,
             itemBuilder: (BuildContext context, int index) {
-              return PalavrasListTileWidget(
-                title: state.palavras[index].palavra,
-                trailing: Icon(Icons.keyboard_arrow_right),
-              );
+              return (index >= state.palavras.length)
+                  ? BottomLoaderWidget()
+                  : Dismissible(
+                      key: Key(state.palavras[index].palavraID),
+                      confirmDismiss: (direction) async {
+                        var oQueFazer = await confirmDismiss(
+                            context: context,
+                            palavra: state.palavras[index].palavra);
+                        return oQueFazer == 'Sim';
+                      },
+                      onDismissed: (direction) async {
+                        await dismissedComplete(
+                            context: context,
+                            palavraID: state.palavras[index].palavraID,
+                            palavra: state.palavras[index].palavra);
+                        return;
+                      },
+                      background: Container(
+                        color: Colors.red,
+                      ),
+                      child: GestureDetector(
+                        onLongPress: () {
+                          print('onLongPress');
+                        },
+                        child: PalavrasListTileWidget(
+                          title: state.palavras[index].palavra,
+                          trailing: Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ),
+                    );
             },
           );
         }

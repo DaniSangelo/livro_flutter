@@ -21,8 +21,6 @@ class PalavrasListViewBloc
     Stream<PalavrasListViewBlocState> Function(PalavrasListViewBlocEvent event)
         next,
   ) {
-    print('transform');
-    print('next -> $next');
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
