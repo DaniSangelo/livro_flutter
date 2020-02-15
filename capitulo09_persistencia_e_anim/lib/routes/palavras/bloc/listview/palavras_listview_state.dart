@@ -6,7 +6,11 @@ abstract class PalavrasListViewBlocState {
 
 class PalavrasListViewBlocUninitialized extends PalavrasListViewBlocState {}
 
-class PalavrasListViewBlocError extends PalavrasListViewBlocState {}
+class PalavrasListViewBlocError extends PalavrasListViewBlocState {
+  final errorMessage;
+
+  PalavrasListViewBlocError({this.errorMessage});
+}
 
 class PalavrasListViewLoaded extends PalavrasListViewBlocState {
   final List<PalavraModel> palavras;

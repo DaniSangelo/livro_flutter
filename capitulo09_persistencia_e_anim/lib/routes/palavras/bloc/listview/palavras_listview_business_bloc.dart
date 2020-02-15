@@ -35,19 +35,21 @@ class PalavrasListViewBloc
   get initialState => PalavrasListViewBlocUninitialized();
 
   Future<List<PalavraModel>> _fetchPalavras(int startIndex, int limit) async {
-    final List data =
-        await this.palavraDAO.getAll(startIndex: startIndex, limit: limit);
-    return data.map((palavra) {
-      return PalavraModel.fromJson(palavra);
-    }).toList();
+    try {
+      final List data =
+          await this.palavraDAO.getAll(startIndex: startIndex, limit: limit);
+      return data.map((palavra) {
+        return PalavraModel.fromJson(palavra);
+      }).toList();
+    } catch (exception) {
+      rethrow;
+    }
   }
 
   @override
   Stream<PalavrasListViewBlocState> mapEventToState(
       PalavrasListViewBlocEvent event) async* {
     final currentState = state;
-    print('event -> $event');
-    print('state -> $state');
 
     if (event is PalavrasListViewBlocEventResetFetch) {
       yield PalavrasListViewBlocUninitialized();
@@ -74,7 +76,7 @@ class PalavrasListViewBloc
                 );
         }
       } catch (exception) {
-        yield PalavrasListViewBlocError();
+        yield PalavrasListViewBlocError(errorMessage: exception);
       }
     }
   }

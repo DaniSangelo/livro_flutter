@@ -30,14 +30,14 @@ class PalavraDAO {
     try {
       Database lpDatabase = await SQFLiteDataBase.instance.database;
 
-      dataList = await lpDatabase.query(
+      var result = await lpDatabase.query(
         kPalavrasTableName,
         columns: [kPalavraPalavraID, kPalavraPalavra, kPalavraAjuda],
         offset: startIndex ?? null,
         limit: limit ?? null,
       );
 
-//      dataList = result.toList();
+      dataList = result.toList();
       dataList.sort((a, b) {
         return StringFunctions.removerAcentos(a[kPalavraPalavra].toLowerCase())
             .compareTo(StringFunctions.removerAcentos(
@@ -45,7 +45,8 @@ class PalavraDAO {
       });
 
       return dataList;
-    } catch (exception) {
+    } catch (exception, stacktrace) {
+      print('erro -> $exception / $stacktrace');
       rethrow;
     }
   }

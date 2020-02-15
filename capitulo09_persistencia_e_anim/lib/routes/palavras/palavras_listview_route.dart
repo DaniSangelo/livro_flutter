@@ -27,6 +27,13 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    _palavrasListViewBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +45,8 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
           builder: (context, state) {
         print('state -> $state');
         if (state is PalavrasListViewBlocError) {
-          return centerText(text: 'Falha ao recuperar palavras');
+          return centerText(
+              text: 'Falha ao recuperar palavras: ${state.errorMessage}');
         }
 
         if (state is PalavrasListViewLoaded) {
