@@ -1,9 +1,11 @@
+import 'package:capitulo09_persistencia_e_anim/local_persistence/daos/palavra_dao.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/crud/palavras_crud_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'apphelpers/app_router.dart';
 import 'drawer/blocs/drawer_open_state_bloc.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
+import 'routes/palavras/bloc/listview/palavras_listview_bloc.dart';
 import 'routes/splash_screen_route.dart';
 
 void main() => runApp(
@@ -13,6 +15,11 @@ void main() => runApp(
         ),
         BlocProvider<PalavrasCrudFormBloc>(
           create: (BuildContext context) => PalavrasCrudFormBloc(),
+        ),
+        BlocProvider<PalavrasListViewBloc>(
+          create: (BuildContext context) =>
+              PalavrasListViewBloc(palavraDAO: PalavraDAO())
+                ..add(PalavrasListViewBlocEventFetch()),
         ),
       ], child: ForcaApp()),
     );

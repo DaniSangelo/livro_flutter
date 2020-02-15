@@ -21,6 +21,8 @@ class PalavrasListViewBloc
     Stream<PalavrasListViewBlocState> Function(PalavrasListViewBlocEvent event)
         next,
   ) {
+    print('transform');
+    print('next -> $next');
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
@@ -44,6 +46,9 @@ class PalavrasListViewBloc
   Stream<PalavrasListViewBlocState> mapEventToState(
       PalavrasListViewBlocEvent event) async* {
     final currentState = state;
+    print('event -> $event');
+    print('state -> $state');
+
     if (event is PalavrasListViewBlocEventResetFetch) {
       yield PalavrasListViewBlocUninitialized();
       return;
