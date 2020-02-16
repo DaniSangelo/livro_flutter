@@ -51,6 +51,19 @@ class PalavraDAO {
     }
   }
 
+  Future<int> deleteByID(String palavraID) async {
+    try {
+      Database lpDatabase = await SQFLiteDataBase.instance.database;
+
+      var result = await lpDatabase.delete(kPalavrasTableName,
+          where: '$kPalavraPalavraID = ?', whereArgs: [palavraID]);
+
+      return result;
+    } catch (exception) {
+      rethrow;
+    }
+  }
+
 //  Future<String> update({@required ClienteModel clienteModel}) async {
 //    String result;
 //    try {
@@ -77,64 +90,6 @@ class PalavraDAO {
 //    return result;
 //  }
 //
-//  Future<List> getAll({String filter, bool includeDeleted = false}) async {
-//    List<Map<String, dynamic>> dataList = List();
-//    try {
-//      String where;
-//      List<String> whereArgs = [];
-//
-//      if (!includeDeleted) {
-//        where = ' removido = ? ';
-//        whereArgs.add('N');
-//      }
-//
-//      if (filter != null) {
-//        where = (where == null) ? ' nome like ? ' : where + ' AND nome like ?';
-//        whereArgs.add('%${filter.toLowerCase()}%');
-//      }
-//
-//      var database = await SQFLiteDataBase.getDataBase();
-//      var result = await database.query(kClienteTableName,
-//          columns: [
-//            kClienteID,
-//            kClienteTipoPessoa,
-//            kClienteNomeFantasia,
-//            kClienteRazaoSocial,
-//            kClienteCnpj,
-//            kClienteNome,
-//            kClienteCpf,
-//            kClienteEmail,
-//            kClienteTelefone,
-//            kClienteUrlFoto,
-//            kClienteFileNameFoto,
-//            kClienteRemovido,
-//            kClienteVersaoGravada,
-//            kClienteNomeParaClassificacao,
-//            kEnderecoRua,
-//            kEnderecoNumero,
-//            kEnderecoCep,
-//            kEnderecoBairro,
-//            kEnderecoCidade,
-//            kEnderecoUf
-//          ],
-//          where: where == null ? null : where,
-//          whereArgs: whereArgs.length == 0 ? null : whereArgs);
-//
-//      dataList = result.toList();
-//      dataList.sort((a, b) {
-//        return StringFunctions.removerAcentos(
-//                a[kClienteNomeParaClassificacao].toLowerCase())
-//            .compareTo(StringFunctions.removerAcentos(
-//                b[kClienteNomeParaClassificacao].toLowerCase()));
-//      });
-//
-//      return dataList;
-//    } catch (exception, stackTrace) {
-//      await ErrorsApp.showError(
-//          'CLIENTE_DAL->getAll()', exception.toString(), stackTrace.toString());
-//      return dataList;
-//    }
-//  }
 //
 //  Future<ClienteModel> getByID(
 //      {@required String clienteID, bool includeDeleted = false}) async {

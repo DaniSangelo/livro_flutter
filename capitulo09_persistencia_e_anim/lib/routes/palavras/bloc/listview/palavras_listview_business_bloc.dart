@@ -54,6 +54,15 @@ class PalavrasListViewBloc
       return;
     }
 
+    if (event is PalavrasListViewBlocEventConfirmDismiss &&
+        currentState is PalavrasListViewLoaded) {
+      currentState.palavras.removeAt(event.indexOfDismissible);
+      yield PalavrasListViewLoaded(
+          palavras: currentState.palavras,
+          hasReachedMax: currentState.hasReachedMax);
+      return;
+    }
+
     if (event is PalavrasListViewBlocEventFetch &&
         !_hasReachedMax(currentState)) {
       try {

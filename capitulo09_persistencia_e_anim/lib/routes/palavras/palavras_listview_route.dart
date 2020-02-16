@@ -79,20 +79,30 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
                   : Dismissible(
                       key: Key(state.palavras[index].palavraID),
                       confirmDismiss: (direction) async {
-                        var oQueFazer = await confirmDismiss(
+                        return await confirmDismiss(
                             context: context,
-                            palavra: state.palavras[index].palavra);
-                        return oQueFazer == 'Sim';
+                            palavra: state.palavras[index].palavra,
+                            palavraID: state.palavras[index].palavraID);
                       },
                       onDismissed: (direction) async {
                         await dismissedComplete(
                             context: context,
                             palavraID: state.palavras[index].palavraID,
                             palavra: state.palavras[index].palavra);
-                        return;
+
+                        _palavrasListViewBloc.add(
+                          PalavrasListViewBlocEventConfirmDismiss(
+                              indexOfDismissible: index),
+                        );
                       },
                       background: Container(
                         color: Colors.red,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
                       ),
                       child: GestureDetector(
                         onLongPress: () {
