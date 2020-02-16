@@ -49,18 +49,7 @@ mixin PalavrasListViewMixim {
 
     if (oQueFazer == 'Não') return false;
 
-    try {
-      PalavraDAO palavraDAO = PalavraDAO();
-      await palavraDAO.deleteByID(palavraID);
-      return true;
-    } catch (exception) {
-      showSnackBarMessage(
-          context: context,
-          message:
-              'Erro ao remover a Palavra ${palavra.toUpperCase()}: $exception',
-          backgroundColor: Colors.red);
-      return false;
-    }
+    return await _removePalava(palavraID, context, palavra);
   }
 
   Future<void> dismissedComplete(
@@ -84,5 +73,21 @@ mixin PalavrasListViewMixim {
         .then((_) {
       return;
     });
+  }
+
+  Future<bool> _removePalava(
+      String palavraID, BuildContext context, String palavra) async {
+    try {
+      PalavraDAO palavraDAO = PalavraDAO();
+      await palavraDAO.deleteByID(palavraID);
+      return true;
+    } catch (exception) {
+      showSnackBarMessage(
+          context: context,
+          message:
+              'Erro ao remover a Palavra ${palavra.toUpperCase()}: $exception',
+          backgroundColor: Colors.red);
+      return false;
+    }
   }
 }
