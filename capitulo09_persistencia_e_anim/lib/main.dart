@@ -6,6 +6,7 @@ import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/crud/palavra
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'apphelpers/app_router.dart';
+import 'apphelpers/app_simple_bloc_delegate.dart';
 import 'drawer/blocs/drawer_open_state_bloc.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
 import 'routes/palavras/bloc/listview/palavras_listview_bloc.dart';
@@ -32,6 +33,8 @@ void main() => runApp(
 class ForcaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocSupervisor.delegate = SimpleBlocDelegate();
+
 //    PalavraDAO palavraDAO = PalavraDAO();
 //    for (int i = 0; i < 30; i++) {
 //      var random = Random();

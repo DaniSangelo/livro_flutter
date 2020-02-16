@@ -42,7 +42,7 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
   void dispose() {
     _palavrasListViewBloc.add(PalavrasListViewBlocEventResetFetch());
     _scrollController.dispose();
-    _palavrasListViewBloc.close();
+//    _palavrasListViewBloc.close();
     super.dispose();
   }
 
