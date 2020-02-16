@@ -22,8 +22,7 @@ void main() => runApp(
           ),
           BlocProvider<PalavrasListViewBloc>(
             create: (BuildContext context) =>
-                PalavrasListViewBloc(palavraDAO: PalavraDAO())
-                  ..add(PalavrasListViewBlocEventFetch()),
+                PalavrasListViewBloc(palavraDAO: PalavraDAO()),
           ),
         ],
         child: ForcaApp(),

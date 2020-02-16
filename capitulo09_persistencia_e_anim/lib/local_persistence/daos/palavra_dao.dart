@@ -35,6 +35,7 @@ class PalavraDAO {
         columns: [kPalavraPalavraID, kPalavraPalavra, kPalavraAjuda],
         offset: startIndex ?? null,
         limit: limit ?? null,
+        orderBy: kPalavraPalavra,
       );
 
       dataList = result.toList();

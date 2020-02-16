@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/crud/palavras_crud_bloc.dart';
 
 class PalavrasCRUDRoute extends StatefulWidget {
+  final PalavraModel palavraModel;
+
+  const PalavrasCRUDRoute({this.palavraModel});
+
   @override
   _PalavrasCRUDRouteState createState() => _PalavrasCRUDRouteState();
 }
@@ -163,8 +167,17 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
     this._palavrasCrudFormBloc = BlocProvider.of<PalavrasCrudFormBloc>(context);
     this._palavraController.addListener(_onPalavraChanged);
     this._ajudaController.addListener(_onAjudaChanged);
+
+    if (widget.palavraModel != null) {
+      _initializeTextControllers();
+    }
   }
   //#endregion
+
+  _initializeTextControllers() {
+    this._palavraController.text = widget.palavraModel.palavra;
+    this._ajudaController.text = widget.palavraModel.ajuda;
+  }
 
   //#region dispose
   @override
@@ -184,7 +197,9 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
       appBar: AppBar(
         backgroundColor: Colors.grey[600],
         title: Text(
-          'Registro de Palavras',
+          widget.palavraModel == null
+              ? 'Registro de Palavras'
+              : 'Alteração de uma palavra',
         ),
       ),
       body: SafeArea(

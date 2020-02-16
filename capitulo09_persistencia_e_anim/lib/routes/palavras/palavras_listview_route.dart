@@ -1,3 +1,4 @@
+import 'package:capitulo09_persistencia_e_anim/appconstants/router_constants.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/bloc/listview/palavras_listview_bloc.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/mixin/palavras_listview_mixin.dart';
 import 'package:capitulo09_persistencia_e_anim/routes/palavras/widgets/palavras_listtile_widget.dart';
@@ -22,7 +23,14 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
   @override
   void initState() {
     super.initState();
-    _palavrasListViewBloc = BlocProvider.of<PalavrasListViewBloc>(context);
+    print('initState');
+    _palavrasListViewBloc = BlocProvider.of<PalavrasListViewBloc>(context)
+      ..add(PalavrasListViewBlocEventFetch());
+
+//    _palavrasListViewBloc.add(PalavrasListViewBlocEventResetFetch());
+////    _palavrasListViewBloc.add(PalavrasListViewBlocEventFetch());
+//    Future.delayed(Duration(milliseconds: 600)).then((onValue) =>
+//        _palavrasListViewBloc.add(PalavrasListViewBlocEventFetch()));
 
     _scrollController.addListener(() => onScroll(
         palavrasListViewBloc: _palavrasListViewBloc,
@@ -32,6 +40,7 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
 
   @override
   void dispose() {
+    _palavrasListViewBloc.add(PalavrasListViewBlocEventResetFetch());
     _scrollController.dispose();
     _palavrasListViewBloc.close();
     super.dispose();
@@ -104,9 +113,10 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
                           color: Colors.white,
                         ),
                       ),
-                      child: GestureDetector(
+                      child: InkWell(
                         onLongPress: () {
-                          print('onLongPress');
+                          Navigator.of(context).pushNamed(kPalavrasCRUDRoute,
+                              arguments: state.palavras[index]);
                         },
                         child: PalavrasListTileWidget(
                           title: state.palavras[index].palavra,
