@@ -33,7 +33,7 @@ void main() => runApp(
 class ForcaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    BlocSupervisor.delegate = SimpleBlocDelegate();
+//    BlocSupervisor.delegate = SimpleBlocDelegate();
 
 //    PalavraDAO palavraDAO = PalavraDAO();
 //    for (int i = 0; i < 30; i++) {

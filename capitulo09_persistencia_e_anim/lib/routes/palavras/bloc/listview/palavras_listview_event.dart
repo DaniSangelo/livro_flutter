@@ -14,3 +14,5 @@ class PalavrasListViewBlocEventConfirmDismiss
     this.indexOfDismissible,
   });
 }
+
+class PalavrasListViewBlocEventFindListTile extends PalavrasListViewBlocEvent {}

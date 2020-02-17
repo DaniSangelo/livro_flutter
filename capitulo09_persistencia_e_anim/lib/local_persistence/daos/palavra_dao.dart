@@ -65,31 +65,28 @@ class PalavraDAO {
     }
   }
 
-//  Future<String> update({@required ClienteModel clienteModel}) async {
-//    String result;
-//    try {
-//      if (clienteModel.clienteID == null) {
-//        result = await insert(clienteModel: clienteModel);
-//        return result;
-//      }
-//
-//      var database = await SQFLiteDataBase.getDataBase();
-//
-//      clienteModel.versaoGravada++;
-//      var recordsAffected = await database.update(
-//          kClienteTableName, _mapModelToJSon(clienteModel),
-//          where: "clienteID = ?", whereArgs: [clienteModel.clienteID]);
-//      if (recordsAffected == 0)
-//        result = null;
-//      else
-//        result = clienteModel.clienteID;
-//    } catch (exception, stackTrace) {
-//      await ErrorsApp.showError(
-//          'CLIENTE_DAL->update()', exception.toString(), stackTrace.toString());
-//      return null;
-//    }
-//    return result;
-//  }
+  Future<String> update({@required PalavraModel palavraModel}) async {
+    String result;
+    try {
+      if (palavraModel.palavraID == null) {
+        String result = await insert(palavraModel: palavraModel);
+        return result;
+      }
+
+      Database lpDatabase = await SQFLiteDataBase.instance.database;
+
+      var recordsAffected = await lpDatabase.update(
+          kPalavrasTableName, palavraModel.toJson(),
+          where: "$kPalavraPalavraID = ?", whereArgs: [palavraModel.palavraID]);
+      if (recordsAffected == 0)
+        result = null;
+      else
+        result = recordsAffected.toString();
+    } catch (exception) {
+      rethrow;
+    }
+    return result;
+  }
 //
 //
 //  Future<ClienteModel> getByID(

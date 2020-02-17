@@ -18,19 +18,16 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
     with PalavrasListViewMixim {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
+  final double _listTileHeight = 70;
   PalavrasListViewBloc _palavrasListViewBloc;
+  String _palavraIDSelected;
+  String _palavraIDOfTileToDestaque;
 
   @override
   void initState() {
     super.initState();
-    print('initState');
     _palavrasListViewBloc = BlocProvider.of<PalavrasListViewBloc>(context)
       ..add(PalavrasListViewBlocEventFetch());
-
-//    _palavrasListViewBloc.add(PalavrasListViewBlocEventResetFetch());
-////    _palavrasListViewBloc.add(PalavrasListViewBlocEventFetch());
-//    Future.delayed(Duration(milliseconds: 600)).then((onValue) =>
-//        _palavrasListViewBloc.add(PalavrasListViewBlocEventFetch()));
 
     _scrollController.addListener(() => onScroll(
         palavrasListViewBloc: _palavrasListViewBloc,
@@ -66,15 +63,22 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
             return centerText(text: 'Nenhuma palavra registrada ainda.');
           }
 
-//          if (this._scrollController.hasClients) {
-//            for (int i = 0; i < state.palavras.length; i++) {
-//              if (state.palavras[i].campanhaID == this._selectedCampanhaID) {
-//                _scrollController.animateTo(i * 60.0,
-//                    duration: new Duration(seconds: 2), curve: Curves.ease);
-//                this._selectedCampanhaID = null;
-//              }
-//            }
-//          }
+          Future.delayed(Duration(milliseconds: 500)).then((onValue) {
+            if (this._scrollController.hasClients) {
+              for (int i = 0; i < state.palavras.length; i++) {
+                if (state.palavras[i].palavraID == this._palavraIDSelected) {
+                  _scrollController.animateTo(i * _listTileHeight,
+                      duration: new Duration(seconds: 2), curve: Curves.ease);
+                  setState(() {
+                    _palavraIDOfTileToDestaque = this._palavraIDSelected;
+                  });
+                  this._palavraIDSelected = null;
+                }
+              }
+              if (this._palavraIDSelected != null)
+                _palavrasListViewBloc.add(PalavrasListViewBlocEventFetch());
+            }
+          });
 
           return ListView.builder(
             padding: EdgeInsets.only(top: 10),
@@ -114,13 +118,27 @@ class _PalavrasListViewRouteState extends State<PalavrasListViewRoute>
                         ),
                       ),
                       child: InkWell(
-                        onLongPress: () {
-                          Navigator.of(context).pushNamed(kPalavrasCRUDRoute,
+                        onLongPress: () async {
+                          _palavraIDSelected = state.palavras[index].palavraID;
+
+                          _palavrasListViewBloc
+                              .add(PalavrasListViewBlocEventResetFetch());
+
+                          await Navigator.of(context).pushNamed(
+                              kPalavrasCRUDRoute,
                               arguments: state.palavras[index]);
+
+                          _palavrasListViewBloc
+                              .add(PalavrasListViewBlocEventFetch());
                         },
                         child: PalavrasListTileWidget(
                           title: state.palavras[index].palavra,
                           trailing: Icon(Icons.keyboard_arrow_right),
+                          listTileHeight: _listTileHeight,
+                          color: (_palavraIDOfTileToDestaque ==
+                                  state.palavras[index].palavraID)
+                              ? Colors.grey[300]
+                              : Colors.transparent,
                         ),
                       ),
                     );

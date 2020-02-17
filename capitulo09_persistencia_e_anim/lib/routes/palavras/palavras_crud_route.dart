@@ -126,11 +126,14 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
   void _onSubmitPressed() async {
     PalavraDAO palavraDAO = PalavraDAO();
     PalavraModel palavraModel = PalavraModel(
+        palavraID: (widget.palavraModel == null)
+            ? null
+            : widget.palavraModel.palavraID,
         palavra: this._palavraController.text,
         ajuda: this._ajudaController.text);
 
     try {
-      await palavraDAO.insert(palavraModel: palavraModel);
+      await palavraDAO.update(palavraModel: palavraModel);
       _palavrasCrudFormBloc.add(FormSuccessSubmitted());
     } catch (e) {
       rethrow;

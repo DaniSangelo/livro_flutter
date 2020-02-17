@@ -21,7 +21,6 @@ class PalavrasListViewBloc
     Stream<PalavrasListViewBlocState> Function(PalavrasListViewBlocEvent event)
         next,
   ) {
-    print('transform');
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
@@ -49,8 +48,6 @@ class PalavrasListViewBloc
   Stream<PalavrasListViewBlocState> mapEventToState(
       PalavrasListViewBlocEvent event) async* {
     final currentState = state;
-    print('event -> $event');
-    print('state -> $state');
     if (event is PalavrasListViewBlocEventResetFetch) {
       yield PalavrasListViewBlocUninitialized();
       return;
@@ -59,6 +56,14 @@ class PalavrasListViewBloc
     if (event is PalavrasListViewBlocEventConfirmDismiss &&
         currentState is PalavrasListViewLoaded) {
       currentState.palavras.removeAt(event.indexOfDismissible);
+      yield PalavrasListViewLoaded(
+          palavras: currentState.palavras,
+          hasReachedMax: currentState.hasReachedMax);
+      return;
+    }
+
+    if (event is PalavrasListViewBlocEventFindListTile &&
+        currentState is PalavrasListViewLoaded) {
       yield PalavrasListViewLoaded(
           palavras: currentState.palavras,
           hasReachedMax: currentState.hasReachedMax);
