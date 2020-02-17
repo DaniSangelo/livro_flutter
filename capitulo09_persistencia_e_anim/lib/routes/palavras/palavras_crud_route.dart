@@ -161,8 +161,11 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
   }
 
   _resetForm() {
-    _restoreOriginalDataToTexts();
-    this._palavrasCrudFormBloc.add(FormReset());
+    _clearTexts();
+    if (widget.palavraModel != null)
+      Navigator.of(context).pop();
+    else
+      this._palavrasCrudFormBloc.add(FormReset());
   }
 
   //#region initState
