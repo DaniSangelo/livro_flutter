@@ -1,6 +1,7 @@
 import 'package:capitulo09_persistencia_e_anim/local_persistence/daos/palavra_dao.dart';
 import 'package:capitulo09_persistencia_e_anim/mixins/widgets_mixin.dart';
 import 'package:capitulo09_persistencia_e_anim/models/palavra_model.dart';
+import 'package:capitulo09_persistencia_e_anim/routes/palavras/mixin/palavras_crud_mixin.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/container_iluminado_widget.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/dialogs/actions_flatbutton_to_alertdialog_widget.dart';
 import 'package:capitulo09_persistencia_e_anim/widgets/dialogs/information_alert_dialog_widget.dart';
@@ -19,7 +20,7 @@ class PalavrasCRUDRoute extends StatefulWidget {
 }
 
 class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
-    with TextFormFieldMixin {
+    with TextFormFieldMixin, PalavrasCRUDMixim {
   //#region Variáveis
 //  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _palavraController = TextEditingController();
@@ -46,14 +47,6 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
                 padding: const EdgeInsets.only(left: 10, top: 10, right: 10),
                 child: BlocBuilder<PalavrasCrudFormBloc, PalavrasCrudFormState>(
                     builder: (context, formState) {
-//                    return SuccessDialogWidget(
-//                      onDismissed: () {
-//                        _palavraController.clear();
-//                        _ajudaController.clear();
-//                        this._palavrasCrudFormBloc.add(FormReset());
-//                      },
-//                    );
-//                  }
                   return _form(formState);
                 }),
               ),
@@ -99,14 +92,27 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
           SizedBox(
             height: 20,
           ),
-          RaisedButtonWithSnackbarWidget(
-            onPressedVisible: formState.isFormValid,
-            buttonText: 'Gravar',
-            successTextToSnackBar:
-                'Os dados informados foram registrados com sucesso.',
-            failTextToSnackBar: 'Erro na inserção',
-            onButtonPressed: _onSubmitPressed,
-            onStackBarClosed: _resetForm,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              RaisedButton(
+                onPressed:
+                    formState.isFormValid ? _restoreOriginalDataToTexts : null,
+                child: Text('Cancelar'),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              RaisedButtonWithSnackbarWidget(
+                onPressedVisible: formState.isFormValid,
+                buttonText: 'Gravar',
+                successTextToSnackBar:
+                    'Os dados informados foram registrados com sucesso.',
+                failTextToSnackBar: 'Erro na inserção',
+                onButtonPressed: _onSubmitPressed,
+                onStackBarClosed: _resetForm,
+              ),
+            ],
           ),
         ],
       ),
@@ -140,26 +146,22 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
     }
   }
 
-  _successDialog() async {
-    await showDialog(
-      barrierDismissible: false,
-      context: context,
-      child: InformationAlertDialogWidget(
-        title: 'Tudo certo',
-        message: 'Os dados informados foram registrados com sucesso.',
-        actions: [
-          ActionsFlatButtonToAlertDialogWidget(
-            messageButton: 'OK',
-            isDefaultAction: true,
-          ),
-        ],
-      ),
-    );
+  _restoreOriginalDataToTexts() {
+    if (widget.palavraModel == null) {
+      _clearTexts();
+    } else {
+      _palavraController.text = widget.palavraModel.palavra;
+      _ajudaController.text = widget.palavraModel.ajuda;
+    }
+  }
+
+  _clearTexts() {
+    _palavraController.clear();
+    _ajudaController.clear();
   }
 
   _resetForm() {
-    _palavraController.clear();
-    _ajudaController.clear();
+    _restoreOriginalDataToTexts();
     this._palavrasCrudFormBloc.add(FormReset());
   }
 
@@ -195,20 +197,27 @@ class _PalavrasCRUDRouteState extends State<PalavrasCRUDRoute>
   @override
   Widget build(BuildContext context) {
     this._buildContext = context;
-    return Scaffold(
-      backgroundColor: Colors.grey[400],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[600],
-        title: Text(
-          widget.palavraModel == null
-              ? 'Registro de Palavras'
-              : 'Alteração de uma palavra',
+    return WillPopScope(
+      onWillPop: () async => await onWillPop(
+          context: context,
+          palavraModel: widget.palavraModel,
+          palavra: _palavraController.text,
+          ajuda: _ajudaController.text),
+      child: Scaffold(
+        backgroundColor: Colors.grey[400],
+        appBar: AppBar(
+          backgroundColor: Colors.grey[600],
+          title: Text(
+            widget.palavraModel == null
+                ? 'Registro de Palavras'
+                : 'Alteração de uma palavra',
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: _mainColumn(),
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: _mainColumn(),
+            ),
           ),
         ),
       ),
