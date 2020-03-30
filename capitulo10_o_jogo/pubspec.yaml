@@ -1,0 +1,36 @@
+name: capitulo10ojogo
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: ^0.5.4+3
+  flutter_bloc: ^3.0.0
+  json_annotation: ^3.0.1
+  equatable: ^1.0.2
+  sqflite: ^1.2.0
+  path_provider: ^1.6.0
+  uuid: ^2.0.4
+  dialog_information_to_specific_platform: ^0.0.4
+  flare_flutter: ^2.0.1
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  build_runner: ^1.7.3
+  json_serializable: ^3.2.5
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/splashscreen.png
+    - assets/images/drawer/
+    - assets/icons/
+    - assets/flare/
