@@ -14,47 +14,74 @@ class _JogoRouteState extends State<JogoRoute> {
   String letras = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';
   String palavraParaAdivinhar;
   String palavraAdivinhada;
+  List<LetraDoTeclado> letrasDoTeclado = List<LetraDoTeclado>();
+
+  @override
+  void initState() {
+    for (int i = 0; i < letras.length; i++)
+      letrasDoTeclado.add(LetraDoTeclado(letra: this.letras[i]));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                'Vamos jogar a Forca?',
-                style: TextStyle(
-                  fontSize: 30,
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  'Vamos jogar a Forca?',
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
                 ),
               ),
-            ),
-            FlatButton(
-              child: Text('Sorteie a palavra'),
-              color: Colors.blue[200],
-              onPressed: () async => await _getTheWordToGame(),
-            ),
-            this.palavraParaAdivinhar != null
-                ? this._drawSpacesToPlay()
-                : Container(),
-//            Visibility(
-//              visible: this.palavraParaAdivinhar != null,
-//              child: this._drawSpacesToPlay(),
-//            ),
-            Expanded(
-              child: FlareActor(
-                "assets/flare/forca_casa_do_codigo.flr",
-                alignment: Alignment.center,
-                fit: BoxFit.contain,
-                animation: "idle",
+              this.palavraParaAdivinhar == null
+                  ? Container(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      height: 50,
+                      child: FlatButton(
+                        child: Text('Sorteie a palavra'),
+                        color: Colors.blue[200],
+                        onPressed: () async => await _getTheWordToGame(),
+                      ),
+                    )
+                  : Container(
+                      height: 50,
+                    ),
+              this.palavraParaAdivinhar != null
+                  ? this._drawSpacesToPlay()
+                  : Container(
+                      height: 30,
+                    ),
+              Expanded(
+                child: FlareActor(
+                  "assets/flare/forca_casa_do_codigo.flr",
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle",
+                ),
               ),
-            ),
-            _generateKeyBoard(),
-            SizedBox(
-              height: 30,
-            ),
-          ],
+              Visibility(
+                visible: this.palavraParaAdivinhar != null,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: this._generateKeyBoard(),
+              ),
+//              this.palavraParaAdivinhar != null
+//                  ? this._generateKeyBoard()
+//                  : Container(
+//                      height: 80,
+//                    ),
+//              _generateKeyBoard(),
+              SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -91,15 +118,23 @@ class _JogoRouteState extends State<JogoRoute> {
 
   List<Widget> _generateLineToRow({int indexStart, int indexEnd}) {
     List<Widget> textsOfWords = List<Widget>();
+
+    print(2);
+
     for (int i = indexStart; i <= indexEnd && i < letras.length; i++) {
+      print(4);
       textsOfWords.add(GestureDetector(
-        onTap: () => _wordPressed(word: letras[i]),
+        onTap: () {
+          if (!letrasDoTeclado[i].wasPressed) _wordPressed(word: letras[i]);
+        },
         child: Text(
-          letras[i],
+          letrasDoTeclado[i].letra,
           style: TextStyle(
             fontSize: 30,
+            color: letrasDoTeclado[i].wasPressed ? Colors.red : Colors.black,
           ),
         ),
+//        letrasDoTeclado[i],
       ));
       textsOfWords.add(SizedBox(
         width: 15,
@@ -109,7 +144,24 @@ class _JogoRouteState extends State<JogoRoute> {
   }
 
   _wordPressed({String word}) {
-    print(word);
+    print(this.palavraParaAdivinhar);
+    int indexOfWord = this.palavraParaAdivinhar.indexOf(word, 0);
+    while (indexOfWord >= 0) {
+      setState(() {
+        this.palavraAdivinhada =
+            this.palavraAdivinhada.replaceFirst('_', word, indexOfWord);
+      });
+      print(this.palavraAdivinhada);
+      indexOfWord = this.palavraParaAdivinhar.indexOf(word, (indexOfWord + 1));
+    }
+
+    for (int i = 0; i < this.letrasDoTeclado.length; i++) {
+      if (this.letrasDoTeclado[i].letra == word) {
+        setState(() {
+          this.letrasDoTeclado[i].wasPressed = true;
+        });
+      }
+    }
   }
 
   _getTheWordToGame() async {
@@ -117,7 +169,7 @@ class _JogoRouteState extends State<JogoRoute> {
     var random = new Random();
     setState(() {
       this.palavraParaAdivinhar =
-          palavras[random.nextInt(palavras.length)].palavra;
+          palavras[random.nextInt(palavras.length)].palavra.toUpperCase();
     });
     _createPalavraAdivinhada();
   }
@@ -148,9 +200,10 @@ class _JogoRouteState extends State<JogoRoute> {
 
   Row _drawSpacesToPlay() {
     List<Widget> spacesToWord = List<Widget>();
-    for (int i = 0; i < this.palavraParaAdivinhar.length; i++) {
+    for (int i = 0; i < this.palavraAdivinhada.length; i++) {
       spacesToWord.add(Text(
-        this.palavraParaAdivinhar[i] == ' ' ? ' ' : '_',
+        this.palavraAdivinhada[i],
+//        this.palavraParaAdivinhar[i] == ' ' ? ' ' : '_',
         style: TextStyle(
           fontSize: 30,
         ),
@@ -165,3 +218,34 @@ class _JogoRouteState extends State<JogoRoute> {
     );
   }
 }
+
+class LetraDoTeclado extends StatefulWidget {
+  final String letra;
+  bool wasPressed;
+
+  LetraDoTeclado({this.letra, this.wasPressed = false});
+
+  @override
+  _LetraDoTecladoState createState() => _LetraDoTecladoState();
+}
+
+class _LetraDoTecladoState extends State<LetraDoTeclado> {
+  @override
+  Widget build(BuildContext context) {
+    print(3);
+    return Text(
+      widget.letra,
+      style: TextStyle(
+        color: widget.wasPressed ? Colors.red : Colors.black,
+        fontSize: 30,
+      ),
+    );
+  }
+}
+
+//class LetraDoTeclado {
+//  final String letra;
+//  final bool wasPressed;
+//
+//  LetraDoTeclado({this.letra, this.wasPressed = false});
+//}
