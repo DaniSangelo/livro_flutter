@@ -1,14 +1,13 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 mixin JogoMixin {
   titulo() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-      child: Text(
-        'Vamos jogar a Forca?',
-        style: TextStyle(
-          fontSize: 30,
-        ),
+    return _text(
+      text: 'Vamos jogar a Forca?',
+      edgeInsets: const EdgeInsets.only(
+        top: 10.0,
+        bottom: 15,
       ),
     );
   }
@@ -31,9 +30,93 @@ mixin JogoMixin {
         ],
       ),
       child: FlatButton(
-        child: Text('Vamos sortear uma palavra para o Jogo?'),
+        child: Text('Pressione para sortear uma palavra'),
         color: Colors.blue[200],
         onPressed: () {},
+      ),
+    );
+  }
+
+  palavraParaAdivinhar({String palavra}) {
+    return _text(
+      text: palavra,
+      edgeInsets: const EdgeInsets.only(
+        top: 20.0,
+        bottom: 10,
+      ),
+    );
+  }
+
+  animacaoDaForca({String animacao}) {
+    return Expanded(
+      child: FlareActor(
+        "assets/flare/forca_casa_do_codigo.flr",
+        alignment: Alignment.center,
+        fit: BoxFit.contain,
+        animation: animacao,
+      ),
+    );
+  }
+
+  letrasParaSeleccao({String letras}) {
+    List<Widget> textsParaLetras = List<Widget>();
+    for (int i = 0; i < letras.length; i++) {
+      textsParaLetras.add(Text(
+        letras[i],
+        style: TextStyle(
+          fontSize: 40,
+        ),
+      ));
+//      textsParaLetras.add(SizedBox(
+//        width: 10,
+//      ));
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 20,
+        runSpacing: 5,
+        children: textsParaLetras,
+      ),
+    );
+  }
+
+//  List<Widget> _generateLineToRow({int indexStart, int indexEnd}) {
+//    List<Widget> textsOfWords = List<Widget>();
+//
+//    print(2);
+//
+//    for (int i = indexStart; i <= indexEnd && i < letras.length; i++) {
+//      print(4);
+//      textsOfWords.add(GestureDetector(
+//        onTap: () {
+//          if (!letrasDoTeclado[i].wasPressed) _wordPressed(word: letras[i]);
+//        },
+//        child: Text(
+//          letrasDoTeclado[i].letra,
+//          style: TextStyle(
+//            fontSize: 30,
+//            color: letrasDoTeclado[i].wasPressed ? Colors.red : Colors.black,
+//          ),
+//        ),
+////        letrasDoTeclado[i],
+//      ));
+//      textsOfWords.add(SizedBox(
+//        width: 15,
+//      ));
+//    }
+//    return textsOfWords;
+//  }
+
+  _text({String text, EdgeInsets edgeInsets}) {
+    return Padding(
+      padding: edgeInsets,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 30,
+        ),
       ),
     );
   }

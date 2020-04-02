@@ -16,9 +16,9 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
           children: <Widget>[
             titulo(),
             botaoParaSorteioDePalavra(),
-            Container(height: 100, color: Colors.green),
-            Container(height: 350, color: Colors.yellow),
-            Container(height: 100, color: Colors.grey),
+            palavraParaAdivinhar(palavra: '_____ _____ _ _____'),
+            animacaoDaForca(animacao: 'idle'),
+            letrasParaSeleccao(letras: 'ABCDEFGHIJKLMNOPQRSTUWXYZ'),
           ],
         ),
       ),
