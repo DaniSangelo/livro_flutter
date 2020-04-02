@@ -1,3 +1,4 @@
+import 'package:capitulo10ojogo/routes/jogo/mixins/jogo_mixin.dart';
 import 'package:flutter/material.dart';
 
 class JogoRoute extends StatefulWidget {
@@ -5,7 +6,7 @@ class JogoRoute extends StatefulWidget {
   _JogoRouteState createState() => _JogoRouteState();
 }
 
-class _JogoRouteState extends State<JogoRoute> {
+class _JogoRouteState extends State<JogoRoute> with JogoMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,16 +14,8 @@ class _JogoRouteState extends State<JogoRoute> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: 50,
-              color: Colors.red[900],
-              child: Text('Vamos jogar a FORCA?'),
-            ),
-            Container(
-              height: 50,
-              color: Colors.blue,
-              child: RaisedButton(),
-            ),
+            titulo(),
+            botaoParaSorteioDePalavra(),
             Container(height: 100, color: Colors.green),
             Container(height: 350, color: Colors.yellow),
             Container(height: 100, color: Colors.grey),
