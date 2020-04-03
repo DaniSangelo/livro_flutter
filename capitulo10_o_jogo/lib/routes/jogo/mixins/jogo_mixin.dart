@@ -60,6 +60,7 @@ mixin JogoMixin {
 
   letrasParaSeleccao({String letras}) {
     List<Widget> textsParaLetras = List<Widget>();
+
     for (int i = 0; i < letras.length; i++) {
       textsParaLetras.add(Text(
         letras[i],
@@ -67,10 +68,8 @@ mixin JogoMixin {
           fontSize: 40,
         ),
       ));
-//      textsParaLetras.add(SizedBox(
-//        width: 10,
-//      ));
     }
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
       child: Wrap(
@@ -81,33 +80,6 @@ mixin JogoMixin {
       ),
     );
   }
-
-//  List<Widget> _generateLineToRow({int indexStart, int indexEnd}) {
-//    List<Widget> textsOfWords = List<Widget>();
-//
-//    print(2);
-//
-//    for (int i = indexStart; i <= indexEnd && i < letras.length; i++) {
-//      print(4);
-//      textsOfWords.add(GestureDetector(
-//        onTap: () {
-//          if (!letrasDoTeclado[i].wasPressed) _wordPressed(word: letras[i]);
-//        },
-//        child: Text(
-//          letrasDoTeclado[i].letra,
-//          style: TextStyle(
-//            fontSize: 30,
-//            color: letrasDoTeclado[i].wasPressed ? Colors.red : Colors.black,
-//          ),
-//        ),
-////        letrasDoTeclado[i],
-//      ));
-//      textsOfWords.add(SizedBox(
-//        width: 15,
-//      ));
-//    }
-//    return textsOfWords;
-//  }
 
   _text({String text, EdgeInsets edgeInsets}) {
     return Padding(
