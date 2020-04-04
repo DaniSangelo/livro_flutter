@@ -10,4 +10,10 @@ abstract class _JogoStore with Store {
 
   @observable
   String ajudaPalavraParaAdivinhar;
+
+  @action
+  registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
+    this.palavraParaAdivinhar = palavra;
+    this.ajudaPalavraParaAdivinhar = ajuda;
+  }
 }

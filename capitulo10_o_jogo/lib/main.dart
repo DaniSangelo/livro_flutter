@@ -1,30 +1,36 @@
 import 'package:capitulo10ojogo/local_persistence/daos/palavra_dao.dart';
+import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
 import 'package:capitulo10ojogo/routes/palavras/bloc/crud/palavras_crud_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'apphelpers/app_router.dart';
 import 'drawer/blocs/drawer_open_state_bloc.dart';
 import 'functions/device_functions.dart' as DeviceFunctions;
+import 'functions/getit_function.dart';
 import 'routes/palavras/bloc/listview/palavras_listview_bloc.dart';
 import 'routes/splash_screen_route.dart';
 
-void main() => runApp(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<DrawerOpenStateBloc>(
-            create: (BuildContext context) => DrawerOpenStateBloc(),
-          ),
-          BlocProvider<PalavrasCrudFormBloc>(
-            create: (BuildContext context) => PalavrasCrudFormBloc(),
-          ),
-          BlocProvider<PalavrasListViewBloc>(
-            create: (BuildContext context) =>
-                PalavrasListViewBloc(palavraDAO: PalavraDAO()),
-          ),
-        ],
-        child: ForcaApp(),
-      ),
-    );
+void main() {
+  getIt.registerSingleton<JogoStore>(JogoStore());
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<DrawerOpenStateBloc>(
+          create: (BuildContext context) => DrawerOpenStateBloc(),
+        ),
+        BlocProvider<PalavrasCrudFormBloc>(
+          create: (BuildContext context) => PalavrasCrudFormBloc(),
+        ),
+        BlocProvider<PalavrasListViewBloc>(
+          create: (BuildContext context) =>
+              PalavrasListViewBloc(palavraDAO: PalavraDAO()),
+        ),
+      ],
+      child: ForcaApp(),
+    ),
+  );
+}
 
 class ForcaApp extends StatelessWidget {
   @override
