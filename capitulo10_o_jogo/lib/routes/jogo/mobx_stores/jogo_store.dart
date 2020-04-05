@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:capitulo10ojogo/local_persistence/daos/palavra_dao.dart';
+import 'package:capitulo10ojogo/models/palavra_model.dart';
 import 'package:mobx/mobx.dart';
 
 part 'jogo_store.g.dart';
@@ -5,6 +9,8 @@ part 'jogo_store.g.dart';
 class JogoStore = _JogoStore with _$JogoStore;
 
 abstract class _JogoStore with Store {
+  List<PalavraModel> _palavrasRegistradas = [];
+
   @observable
   String palavraParaAdivinhar;
 
@@ -12,8 +18,34 @@ abstract class _JogoStore with Store {
   String ajudaPalavraParaAdivinhar;
 
   @action
-  registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
-    this.palavraParaAdivinhar = palavra;
+  _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
+    this.palavraParaAdivinhar = palavra.toUpperCase();
     this.ajudaPalavraParaAdivinhar = ajuda;
+  }
+
+  selecionarPalavraParaAdivinhar() async {
+    if (this._palavrasRegistradas.length == 0)
+      this._palavrasRegistradas = await _carregarPalavras();
+
+    var random = new Random();
+    int indiceSorteado = random.nextInt(this._palavrasRegistradas.length);
+    PalavraModel palavraSelecionada = this._palavrasRegistradas[indiceSorteado];
+
+    _registrarPalavraParaAdivinhar(
+        palavra: palavraSelecionada.palavra, ajuda: palavraSelecionada.ajuda);
+
+    this._palavrasRegistradas.removeAt(indiceSorteado);
+  }
+
+  Future<List<PalavraModel>> _carregarPalavras() async {
+    try {
+      PalavraDAO palavraDAO = PalavraDAO();
+      final List data = await palavraDAO.getAll();
+      return data.map((palavra) {
+        return PalavraModel.fromJson(palavra);
+      }).toList();
+    } catch (exception) {
+      rethrow;
+    }
   }
 }

@@ -60,14 +60,12 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
               children: <Widget>[
                 titulo(),
                 botaoParaSorteioDePalavra(
-                  onPressed: () => this
-                      ._jogoStore
-                      .registrarPalavraParaAdivinhar(
-                          palavra: 'teste', ajuda: 'ajuda para teste'),
+                  onPressed: () =>
+                      this._jogoStore.selecionarPalavraParaAdivinhar(),
                 ),
                 palavraParaAdivinhar(palavra: '_____ _____ _ _____'),
                 ajudaParaAdivinharAPalavra(
-                    ajuda: this._jogoStore.palavraParaAdivinhar),
+                    ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
                 animacaoDaForca(animacao: 'idle'),
                 letrasParaSeleccao(letras: 'ABCDEFGHIJKLMNOPQRSTUWXYZ'),
               ],

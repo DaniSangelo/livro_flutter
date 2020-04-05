@@ -52,11 +52,11 @@ mixin _$JogoStore on _JogoStore, Store {
   final _$_JogoStoreActionController = ActionController(name: '_JogoStore');
 
   @override
-  dynamic registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
+  dynamic _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
     final _$actionInfo = _$_JogoStoreActionController.startAction();
     try {
       return super
-          .registrarPalavraParaAdivinhar(palavra: palavra, ajuda: ajuda);
+          ._registrarPalavraParaAdivinhar(palavra: palavra, ajuda: ajuda);
     } finally {
       _$_JogoStoreActionController.endAction(_$actionInfo);
     }
