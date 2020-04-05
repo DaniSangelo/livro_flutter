@@ -11,7 +11,9 @@ class JogoRoute extends StatefulWidget {
 
 class _JogoRouteState extends State<JogoRoute> with JogoMixin {
   JogoStore _jogoStore;
-  List<ReactionDisposer> _disposers;
+  List<ReactionDisposer> _reactionDisposers;
+  bool _jogoIniciado = false;
+  String _ajudaParaPalavra = '';
 
   @override
   void initState() {
@@ -22,17 +24,19 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _disposers ??= [
+    _reactionDisposers ??= [
       reaction(
         (_) => _jogoStore.palavraParaAdivinhar,
-        (String palavra) {
-          print('nova palavra: $palavra');
-        },
+        (String palavra) => print('nova palavra: $palavra'),
       ),
       reaction(
         (_) => _jogoStore.ajudaPalavraParaAdivinhar,
         (String ajuda) {
           print('nova ajuda: $ajuda');
+          setState(() {
+            this._jogoIniciado = !this._jogoIniciado;
+            this._ajudaParaPalavra = ajuda;
+          });
         },
       ),
     ];
@@ -40,7 +44,7 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
 
   @override
   void dispose() {
-    _disposers.forEach((d) => d());
+    _reactionDisposers.forEach((d) => d());
     super.dispose();
   }
 
@@ -52,11 +56,21 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             titulo(),
-            botaoParaSorteioDePalavra(
-              onPressed: () => this._jogoStore.registrarPalavraParaAdivinhar(
-                  palavra: 'teste', ajuda: 'ajuda para teste'),
+            Visibility(
+              visible: !this._jogoIniciado,
+              child: botaoParaSorteioDePalavra(
+                onPressed: () => this._jogoStore.registrarPalavraParaAdivinhar(
+                    palavra: 'teste', ajuda: 'ajuda para teste'),
+              ),
             ),
             palavraParaAdivinhar(palavra: '_____ _____ _ _____'),
+            Visibility(
+              visible: this._jogoIniciado,
+              child: Text(
+                this._ajudaParaPalavra,
+                textAlign: TextAlign.center,
+              ),
+            ),
             animacaoDaForca(animacao: 'idle'),
             letrasParaSeleccao(letras: 'ABCDEFGHIJKLMNOPQRSTUWXYZ'),
           ],
