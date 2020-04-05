@@ -92,4 +92,16 @@ mixin JogoMixin {
       ),
     );
   }
+
+  ajudaParaAdivinharAPalavra({String ajuda}) {
+    return (ajuda != null)
+        ? _text(
+            text: ajuda,
+            edgeInsets: const EdgeInsets.only(
+              top: 10.0,
+              bottom: 15,
+            ),
+          )
+        : Container();
+  }
 }
