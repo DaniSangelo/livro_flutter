@@ -6,6 +6,10 @@ import 'package:mobx/mobx.dart';
 
 part 'jogo_store.g.dart';
 
+/// flutter packages pub run build_runner build
+/// flutter packages pub run build_runner build --delete-conflicting-outputs
+/// flutter packages pub run build_runner watch
+
 class JogoStore = _JogoStore with _$JogoStore;
 
 abstract class _JogoStore with Store {
@@ -17,10 +21,15 @@ abstract class _JogoStore with Store {
   @observable
   String ajudaPalavraParaAdivinhar;
 
+  @observable
+  String palavraAdivinhada = '';
+
   @action
   _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
     this.palavraParaAdivinhar = palavra.toUpperCase();
     this.ajudaPalavraParaAdivinhar = ajuda;
+
+    _transformarPalavraParaAdivinhar();
   }
 
   selecionarPalavraParaAdivinhar() async {
@@ -46,6 +55,18 @@ abstract class _JogoStore with Store {
       }).toList();
     } catch (exception) {
       rethrow;
+    }
+  }
+
+  _transformarPalavraParaAdivinhar() {
+    this.palavraAdivinhada = '';
+    for (int i = 0; i < this.palavraParaAdivinhar.length; i++) {
+      if (this.palavraParaAdivinhar[i] != ' ')
+        this.palavraAdivinhada = this.palavraAdivinhada + '_';
+      else
+        this.palavraAdivinhada = this.palavraAdivinhada + '  ';
+
+      this.palavraAdivinhada = this.palavraAdivinhada + ' ';
     }
   }
 }

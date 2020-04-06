@@ -63,7 +63,8 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                   onPressed: () =>
                       this._jogoStore.selecionarPalavraParaAdivinhar(),
                 ),
-                palavraParaAdivinhar(palavra: '_____ _____ _ _____'),
+                palavraParaAdivinhar(
+                    palavra: this._jogoStore.palavraAdivinhada),
                 ajudaParaAdivinharAPalavra(
                     ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
                 animacaoDaForca(animacao: 'idle'),

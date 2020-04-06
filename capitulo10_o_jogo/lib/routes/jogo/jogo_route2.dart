@@ -172,7 +172,15 @@ class _JogoRoute2State extends State<JogoRoute2> {
       }
     }
   }
-
+  this.palavraAdivinhada = '';
+  print('Adivinhar: ${this.palavraParaAdivinhar}');
+  for (int i = 0; i < this.palavraParaAdivinhar.length; i++) {
+  if (this.palavraParaAdivinhar[i] != ' ')
+  this.palavraAdivinhada = this.palavraAdivinhada.substring(0) + '_';
+  else
+  this.palavraAdivinhada = this.palavraAdivinhada.substring(0) + ' ';
+  print('Adivinhada: ${this.palavraAdivinhada}');
+  }
   _getTheWordToGame() async {
     List<PalavraModel> palavras = await _fetchPalavras();
     var random = new Random();
@@ -204,15 +212,7 @@ class _JogoRoute2State extends State<JogoRoute2> {
   }
 
   _createPalavraAdivinhada() {
-    this.palavraAdivinhada = '';
-    print('Adivinhar: ${this.palavraParaAdivinhar}');
-    for (int i = 0; i < this.palavraParaAdivinhar.length; i++) {
-      if (this.palavraParaAdivinhar[i] != ' ')
-        this.palavraAdivinhada = this.palavraAdivinhada.substring(0) + '_';
-      else
-        this.palavraAdivinhada = this.palavraAdivinhada.substring(0) + ' ';
-      print('Adivinhada: ${this.palavraAdivinhada}');
-    }
+
   }
 
   Future<List<PalavraModel>> _fetchPalavras() async {

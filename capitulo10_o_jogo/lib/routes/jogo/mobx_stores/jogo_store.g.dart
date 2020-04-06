@@ -49,6 +49,23 @@ mixin _$JogoStore on _JogoStore, Store {
         name: '${_$ajudaPalavraParaAdivinharAtom.name}_set');
   }
 
+  final _$palavraAdivinhadaAtom = Atom(name: '_JogoStore.palavraAdivinhada');
+
+  @override
+  String get palavraAdivinhada {
+    _$palavraAdivinhadaAtom.context.enforceReadPolicy(_$palavraAdivinhadaAtom);
+    _$palavraAdivinhadaAtom.reportObserved();
+    return super.palavraAdivinhada;
+  }
+
+  @override
+  set palavraAdivinhada(String value) {
+    _$palavraAdivinhadaAtom.context.conditionallyRunInAction(() {
+      super.palavraAdivinhada = value;
+      _$palavraAdivinhadaAtom.reportChanged();
+    }, _$palavraAdivinhadaAtom, name: '${_$palavraAdivinhadaAtom.name}_set');
+  }
+
   final _$_JogoStoreActionController = ActionController(name: '_JogoStore');
 
   @override
@@ -65,7 +82,7 @@ mixin _$JogoStore on _JogoStore, Store {
   @override
   String toString() {
     final string =
-        'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()}';
+        'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhada: ${palavraAdivinhada.toString()}';
     return '{$string}';
   }
 }
