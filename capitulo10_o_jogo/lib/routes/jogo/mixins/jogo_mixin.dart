@@ -1,3 +1,6 @@
+import 'package:capitulo10ojogo/routes/jogo/jogo_route2.dart';
+import 'package:capitulo10ojogo/routes/jogo/widgets/letra_teclado_jogo_widget.dart';
+import 'package:capitulo10ojogo/routes/jogo/widgets/teclado_jogo_widget.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
@@ -58,25 +61,24 @@ mixin JogoMixin {
     );
   }
 
-  letrasParaSeleccao({String letras}) {
+  exibirTecladoParaJogo({List<LetraTecladoJogoWidget> letras}) {
     List<Widget> textsParaLetras = List<Widget>();
 
     for (int i = 0; i < letras.length; i++) {
-      textsParaLetras.add(Text(
-        letras[i],
-        style: TextStyle(
-          fontSize: 40,
+      textsParaLetras.add(
+        InkWell(
+          child: letras[i],
+          onTap: () {
+            print('Letra ${letras[i].letra} foi pressionada');
+          },
         ),
-      ));
+      );
     }
 
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 20,
-        runSpacing: 5,
-        children: textsParaLetras,
+      child: TecladoJogoWidget(
+        textsParaLetras: textsParaLetras,
       ),
     );
   }

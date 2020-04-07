@@ -1,6 +1,7 @@
 import 'package:capitulo10ojogo/functions/getit_function.dart';
 import 'package:capitulo10ojogo/routes/jogo/mixins/jogo_mixin.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
+import 'package:capitulo10ojogo/routes/jogo/widgets/letra_teclado_jogo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -12,41 +13,21 @@ class JogoRoute extends StatefulWidget {
 
 class _JogoRouteState extends State<JogoRoute> with JogoMixin {
   JogoStore _jogoStore;
-//  List<ReactionDisposer> _reactionDisposers;
-//  bool _jogoIniciado = false;
-//  String _ajudaParaPalavra = '';
+  String letrasParaTeclado = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';
+  List<LetraTecladoJogoWidget> widgetsDeLetrasDoTeclado =
+      List<LetraTecladoJogoWidget>();
 
   @override
   void initState() {
     super.initState();
     _jogoStore = getIt.get<JogoStore>();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-//    _reactionDisposers ??= [
-//      reaction(
-//        (_) => _jogoStore.palavraParaAdivinhar,
-//        (String palavra) => print('nova palavra: $palavra'),
-//      ),
-//      reaction(
-//        (_) => _jogoStore.ajudaPalavraParaAdivinhar,
-//        (String ajuda) {
-//          print('nova ajuda: $ajuda');
-//          setState(() {
-//            this._jogoIniciado = !this._jogoIniciado;
-//            this._ajudaParaPalavra = ajuda;
-//          });
-//        },
-//      ),
-//    ];
-  }
-
-  @override
-  void dispose() {
-//    _reactionDisposers.forEach((d) => d());
-    super.dispose();
+    for (int i = 0; i < letrasParaTeclado.length; i++) {
+      widgetsDeLetrasDoTeclado.add(
+        LetraTecladoJogoWidget(
+          letra: this.letrasParaTeclado[i],
+        ),
+      );
+    }
   }
 
   @override
@@ -68,7 +49,7 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                 ajudaParaAdivinharAPalavra(
                     ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
                 animacaoDaForca(animacao: 'idle'),
-                letrasParaSeleccao(letras: 'ABCDEFGHIJKLMNOPQRSTUWXYZ'),
+                exibirTecladoParaJogo(letras: this.widgetsDeLetrasDoTeclado),
               ],
             );
           },
