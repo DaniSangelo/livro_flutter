@@ -1,5 +1,6 @@
 import 'package:capitulo10ojogo/local_persistence/daos/palavra_dao.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
+import 'package:capitulo10ojogo/routes/jogo/mobx_stores/teclado_store.dart';
 import 'package:capitulo10ojogo/routes/palavras/bloc/crud/palavras_crud_form_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'routes/splash_screen_route.dart';
 
 void main() {
   getIt.registerSingleton<JogoStore>(JogoStore());
+  getIt.registerSingleton<TecladoStore>(TecladoStore());
 
   runApp(
     MultiBlocProvider(

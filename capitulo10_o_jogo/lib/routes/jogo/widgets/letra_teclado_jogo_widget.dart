@@ -1,10 +1,12 @@
+import 'package:capitulo10ojogo/functions/getit_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LetraTecladoJogoWidget extends StatefulWidget {
   final String letra;
   final bool foiUtilizada;
 
-  const LetraTecladoJogoWidget({
+  LetraTecladoJogoWidget({
     this.letra,
     this.foiUtilizada = false,
   });
@@ -14,6 +16,11 @@ class LetraTecladoJogoWidget extends StatefulWidget {
 }
 
 class _LetraTecladoJogoWidgetState extends State<LetraTecladoJogoWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Text(

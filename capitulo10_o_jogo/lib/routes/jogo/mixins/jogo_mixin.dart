@@ -61,27 +61,28 @@ mixin JogoMixin {
     );
   }
 
-  exibirTecladoParaJogo({List<LetraTecladoJogoWidget> letras}) {
-    List<Widget> textsParaLetras = List<Widget>();
-
-    for (int i = 0; i < letras.length; i++) {
-      textsParaLetras.add(
-        InkWell(
-          child: letras[i],
-          onTap: () {
-            print('Letra ${letras[i].letra} foi pressionada');
-          },
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
-      child: TecladoJogoWidget(
-        textsParaLetras: textsParaLetras,
-      ),
-    );
-  }
+//  exibirTecladoParaJogo({List<LetraTecladoJogoWidget> letras}) {
+//    List<Widget> textsParaLetras = List<Widget>();
+//
+//    for (int i = 0; i < letras.length; i++) {
+//      textsParaLetras.add(
+//        letras[i],
+////        InkWell(
+////          child: letras[i],
+////          onTap: () {
+////            print('Letra ${letras[i].letra} foi pressionada');
+////          },
+////        ),
+//      );
+//    }
+//
+//    return Padding(
+//      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
+//      child: TecladoJogoWidget(
+//        textsParaLetras: textsParaLetras,
+//      ),
+//    );
+//  }
 
   _text({String text, EdgeInsets edgeInsets}) {
     return Padding(
