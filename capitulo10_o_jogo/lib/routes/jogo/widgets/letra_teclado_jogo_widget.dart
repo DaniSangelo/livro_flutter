@@ -1,6 +1,4 @@
-import 'package:capitulo10ojogo/functions/getit_function.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LetraTecladoJogoWidget extends StatefulWidget {
   final String letra;
@@ -13,6 +11,13 @@ class LetraTecladoJogoWidget extends StatefulWidget {
 
   @override
   _LetraTecladoJogoWidgetState createState() => _LetraTecladoJogoWidgetState();
+
+  LetraTecladoJogoWidget copyWith(LetraTecladoJogoWidget newValues) {
+    return LetraTecladoJogoWidget(
+      letra: newValues.letra ?? letra,
+      foiUtilizada: newValues.foiUtilizada ?? foiUtilizada,
+    );
+  }
 }
 
 class _LetraTecladoJogoWidgetState extends State<LetraTecladoJogoWidget> {

@@ -40,7 +40,6 @@ class _TecladoJogoWidgetState extends State<TecladoJogoWidget> {
     for (int i = 0; i < _tecladoStore.widgetsDeLetrasDoTeclado.length; i++) {
       teclado.add(InkWell(
         onTap: () {
-          print(_tecladoStore.widgetsDeLetrasDoTeclado[i].letra);
           _tecladoStore.letraPressionada(indiceDaLetra: i);
         },
         child: _tecladoStore.widgetsDeLetrasDoTeclado[i],

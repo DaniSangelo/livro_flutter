@@ -41,7 +41,6 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                     ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
                 animacaoDaForca(animacao: 'idle'),
                 TecladoJogoWidget(),
-//                exibirTecladoParaJogo(letras: this.widgetsDeLetrasDoTeclado),
               ],
             );
           },
