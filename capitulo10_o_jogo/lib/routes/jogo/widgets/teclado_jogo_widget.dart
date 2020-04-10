@@ -1,4 +1,5 @@
 import 'package:capitulo10ojogo/functions/getit_function.dart';
+import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/teclado_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,11 +12,13 @@ class TecladoJogoWidget extends StatefulWidget {
 class _TecladoJogoWidgetState extends State<TecladoJogoWidget> {
   String letrasParaTeclado = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';
   TecladoStore _tecladoStore;
+  JogoStore _jogoStore;
 
   @override
   void initState() {
     super.initState();
     _tecladoStore = getIt.get<TecladoStore>();
+    _jogoStore = getIt.get<JogoStore>();
     _tecladoStore.inicializarTeclado(letrasParaTeclado: letrasParaTeclado);
   }
 
@@ -29,19 +32,23 @@ class _TecladoJogoWidgetState extends State<TecladoJogoWidget> {
               alignment: WrapAlignment.center,
               spacing: 20,
               runSpacing: 5,
-              children: _gerarTeclado(_tecladoStore.widgetsDeLetrasDoTeclado),
+              children: _gerarTeclado(),
             );
           },
         ));
   }
 
-  _gerarTeclado(teste) {
+  _gerarTeclado() {
     var teclado = List<Widget>();
     for (int i = 0; i < _tecladoStore.widgetsDeLetrasDoTeclado.length; i++) {
       teclado.add(InkWell(
-        onTap: () {
-          _tecladoStore.letraPressionada(indiceDaLetra: i);
-        },
+        onTap: (!_tecladoStore.widgetsDeLetrasDoTeclado[i].foiUtilizada)
+            ? () {
+                _tecladoStore.letraPressionada(indiceDaLetra: i);
+                _jogoStore.verificarExistenciaDaLetraNaPalavraParaAdivinhar(
+                    letra: _tecladoStore.widgetsDeLetrasDoTeclado[i].letra);
+              }
+            : null,
         child: _tecladoStore.widgetsDeLetrasDoTeclado[i],
       ));
     }

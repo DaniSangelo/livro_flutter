@@ -80,6 +80,17 @@ mixin _$JogoStore on _JogoStore, Store {
   }
 
   @override
+  dynamic verificarExistenciaDaLetraNaPalavraParaAdivinhar({String letra}) {
+    final _$actionInfo = _$_JogoStoreActionController.startAction();
+    try {
+      return super
+          .verificarExistenciaDaLetraNaPalavraParaAdivinhar(letra: letra);
+    } finally {
+      _$_JogoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
         'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhada: ${palavraAdivinhada.toString()}';

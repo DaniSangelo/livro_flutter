@@ -21,15 +21,28 @@ abstract class _JogoStore with Store {
   @observable
   String ajudaPalavraParaAdivinhar;
 
-  @observable
+//  @observable
   String palavraAdivinhada = '';
+
+//  @observable
+//  String palavraAdivinhadaFormatada = '';
+//
+  @computed
+  String get palavraAdivinhadaFormatada => _palavraAdivinhadaFormatada();
+
+  _palavraAdivinhadaFormatada() {
+    String palavraFormatada = '';
+    for (int i = 0; i < this.palavraAdivinhada.length; i++) {
+      palavraFormatada = palavraFormatada + this.palavraAdivinhada[i] + ' ';
+    }
+    return palavraFormatada;
+  }
 
   @action
   _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
     this.palavraParaAdivinhar = palavra.toUpperCase();
     this.ajudaPalavraParaAdivinhar = ajuda;
-
-    _transformarPalavraParaAdivinhar();
+    this.palavraAdivinhada = _transformarPalavraParaAdivinhar();
   }
 
   selecionarPalavraParaAdivinhar() async {
@@ -59,14 +72,28 @@ abstract class _JogoStore with Store {
   }
 
   _transformarPalavraParaAdivinhar() {
-    this.palavraAdivinhada = '';
+    String palavraFormatada = '';
     for (int i = 0; i < this.palavraParaAdivinhar.length; i++) {
       if (this.palavraParaAdivinhar[i] != ' ')
-        this.palavraAdivinhada = this.palavraAdivinhada + '_';
+        palavraFormatada = palavraFormatada + '_';
       else
-        this.palavraAdivinhada = this.palavraAdivinhada + '  ';
+        palavraFormatada = palavraFormatada + ' ';
+    }
+    return palavraFormatada;
+  }
 
-      this.palavraAdivinhada = this.palavraAdivinhada + ' ';
+  @action
+  verificarExistenciaDaLetraNaPalavraParaAdivinhar({String letra}) {
+    int indexOfWord = this.palavraParaAdivinhar.indexOf(letra, 0);
+    if (indexOfWord < 0) {
+      return;
+    }
+
+    while (indexOfWord >= 0) {
+      this.palavraAdivinhada =
+          this.palavraAdivinhada.replaceFirst('_', letra, indexOfWord);
+
+      indexOfWord = this.palavraParaAdivinhar.indexOf(letra, (indexOfWord + 1));
     }
   }
 }

@@ -12,10 +12,10 @@ class LetraTecladoJogoWidget extends StatefulWidget {
   @override
   _LetraTecladoJogoWidgetState createState() => _LetraTecladoJogoWidgetState();
 
-  LetraTecladoJogoWidget copyWith(LetraTecladoJogoWidget newValues) {
+  LetraTecladoJogoWidget copyWith({String letra, bool foiUtilizada}) {
     return LetraTecladoJogoWidget(
-      letra: newValues.letra ?? letra,
-      foiUtilizada: newValues.foiUtilizada ?? foiUtilizada,
+      letra: letra ?? this.letra,
+      foiUtilizada: foiUtilizada ?? this.foiUtilizada,
     );
   }
 }
