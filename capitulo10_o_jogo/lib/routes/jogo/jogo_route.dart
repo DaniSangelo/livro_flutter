@@ -40,8 +40,7 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                     palavra: this._jogoStore.palavraAdivinhadaFormatada),
                 ajudaParaAdivinharAPalavra(
                     ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
-                animacaoDaForca(
-                    animacao: 'idle'), //this._jogoStore.animacaoFlare),
+                animacaoDaForca(animacao: this._jogoStore.animacaoFlare),
                 TecladoJogoWidget(),
               ],
             );

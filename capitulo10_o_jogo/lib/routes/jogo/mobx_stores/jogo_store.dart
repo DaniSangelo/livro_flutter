@@ -16,12 +16,12 @@ abstract class _JogoStore with Store {
   List<PalavraModel> _palavrasRegistradas = [];
 
   String palavraAdivinhada = '';
-//
+
 //  @observable
-//  int quantidadeErros = -1;
-//
-//  @observable
-//  String animacaoFlare = 'idle';
+  int quantidadeErros = 0;
+
+  @observable
+  String animacaoFlare = 'idle';
 
   @observable
   String palavraParaAdivinhar;
@@ -40,24 +40,21 @@ abstract class _JogoStore with Store {
     return palavraFormatada;
   }
 
-//  @action
-//  registrarErro() {
-//    print('1. $quantidadeErros');
-//    quantidadeErros++;
-//    if (this.quantidadeErros == 0)
-//      this.animacaoFlare = 'inicio';
-//    else if (this.quantidadeErros == 1)
-//      this.animacaoFlare = 'cadeira';
-//    else if (this.quantidadeErros == 2)
-//      this.animacaoFlare = 'corpo';
-//    else if (this.quantidadeErros == 3)
-//      this.animacaoFlare = 'cabeca';
-//    else if (this.quantidadeErros == 4)
-//      this.animacaoFlare = 'balanco';
-//    else if (this.quantidadeErros == 5)
-//      this.animacaoFlare = 'enforcamento';
-//    else if (this.quantidadeErros == 6) this.animacaoFlare = 'balanco';
-//  }
+  @action
+  registrarErro() {
+    quantidadeErros++;
+    if (this.quantidadeErros == 1)
+      this.animacaoFlare = 'cadeira';
+    else if (this.quantidadeErros == 2)
+      this.animacaoFlare = 'corpo';
+    else if (this.quantidadeErros == 3)
+      this.animacaoFlare = 'cabeca';
+    else if (this.quantidadeErros == 4)
+      this.animacaoFlare = 'balanco';
+    else if (this.quantidadeErros == 5)
+      this.animacaoFlare = 'enforcamento';
+    else if (this.quantidadeErros == 6) this.animacaoFlare = 'balanco';
+  }
 
   @action
   _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
@@ -79,7 +76,7 @@ abstract class _JogoStore with Store {
         palavra: palavraSelecionada.palavra, ajuda: palavraSelecionada.ajuda);
 
     this._palavrasRegistradas.removeAt(indiceSorteado);
-//    this.quantidadeErros = 0;
+    this.animacaoFlare = 'inicio';
   }
 
   Future<List<PalavraModel>> _carregarPalavras() async {
@@ -109,7 +106,7 @@ abstract class _JogoStore with Store {
   verificarExistenciaDaLetraNaPalavraParaAdivinhar({String letra}) {
     int indexOfWord = this.palavraParaAdivinhar.indexOf(letra, 0);
     if (indexOfWord < 0) {
-//      registrarErro();
+      registrarErro();
       return;
     }
 
@@ -119,5 +116,7 @@ abstract class _JogoStore with Store {
 
       indexOfWord = this.palavraParaAdivinhar.indexOf(letra, (indexOfWord + 1));
     }
+
+    this.palavraAdivinhadaFormatada = _palavraAdivinhadaFormatada();
   }
 }

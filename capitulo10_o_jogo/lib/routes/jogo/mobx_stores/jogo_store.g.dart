@@ -9,6 +9,23 @@ part of 'jogo_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$JogoStore on _JogoStore, Store {
+  final _$animacaoFlareAtom = Atom(name: '_JogoStore.animacaoFlare');
+
+  @override
+  String get animacaoFlare {
+    _$animacaoFlareAtom.context.enforceReadPolicy(_$animacaoFlareAtom);
+    _$animacaoFlareAtom.reportObserved();
+    return super.animacaoFlare;
+  }
+
+  @override
+  set animacaoFlare(String value) {
+    _$animacaoFlareAtom.context.conditionallyRunInAction(() {
+      super.animacaoFlare = value;
+      _$animacaoFlareAtom.reportChanged();
+    }, _$animacaoFlareAtom, name: '${_$animacaoFlareAtom.name}_set');
+  }
+
   final _$palavraParaAdivinharAtom =
       Atom(name: '_JogoStore.palavraParaAdivinhar');
 
@@ -72,6 +89,16 @@ mixin _$JogoStore on _JogoStore, Store {
   final _$_JogoStoreActionController = ActionController(name: '_JogoStore');
 
   @override
+  dynamic registrarErro() {
+    final _$actionInfo = _$_JogoStoreActionController.startAction();
+    try {
+      return super.registrarErro();
+    } finally {
+      _$_JogoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic _registrarPalavraParaAdivinhar({String palavra, String ajuda}) {
     final _$actionInfo = _$_JogoStoreActionController.startAction();
     try {
@@ -96,7 +123,7 @@ mixin _$JogoStore on _JogoStore, Store {
   @override
   String toString() {
     final string =
-        'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhadaFormatada: ${palavraAdivinhadaFormatada.toString()}';
+        'animacaoFlare: ${animacaoFlare.toString()},palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhadaFormatada: ${palavraAdivinhadaFormatada.toString()}';
     return '{$string}';
   }
 }
