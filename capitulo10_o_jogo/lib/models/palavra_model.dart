@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'palavra_model.g.dart';
 
-// flutter packages pub run build_runner build --delete-conflicting-outputs
+/// flutter packages pub run build_runner build --delete-conflicting-outputs
 @JsonSerializable()
 class PalavraModel extends Equatable {
   String palavraID;

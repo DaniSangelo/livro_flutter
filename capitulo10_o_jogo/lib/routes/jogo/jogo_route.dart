@@ -28,22 +28,49 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                titulo(),
-                botaoParaSorteioDePalavra(
-                  onPressed: () =>
-                      this._jogoStore.selecionarPalavraParaAdivinhar(),
-                ),
-                palavraParaAdivinhar(
-                    palavra: this._jogoStore.palavraAdivinhadaFormatada),
-                ajudaParaAdivinharAPalavra(
-                    ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
-                animacaoDaForca(animacao: this._jogoStore.animacaoFlare),
-                TecladoJogoWidget(),
-              ],
-            );
+            return (!this._jogoStore.ganhou)
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Visibility(
+                        visible:
+                            this._jogoStore.palavraAdivinhadaFormatada.isEmpty,
+                        child: titulo(),
+                      ),
+                      Visibility(
+                        visible:
+                            this._jogoStore.palavraAdivinhadaFormatada.isEmpty,
+                        child: botaoParaSorteioDePalavra(
+                          onPressed: () =>
+                              this._jogoStore.selecionarPalavraParaAdivinhar(),
+                        ),
+                      ),
+                      Visibility(
+                        visible: this
+                            ._jogoStore
+                            .palavraAdivinhadaFormatada
+                            .isNotEmpty,
+                        child: palavraParaAdivinhar(
+                            palavra:
+                                this._jogoStore.palavraAdivinhadaFormatada),
+                      ),
+                      Visibility(
+                        visible:
+                            this._jogoStore.ajudaPalavraParaAdivinhar != null,
+                        child: ajudaParaAdivinharAPalavra(
+                            ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
+                      ),
+                      animacaoDaForca(animacao: this._jogoStore.animacaoFlare),
+                      TecladoJogoWidget(),
+                    ],
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/jogo/vitoria.jpg"),
+                          fit: BoxFit.cover),
+                    ),
+                  );
           },
         ),
       ),

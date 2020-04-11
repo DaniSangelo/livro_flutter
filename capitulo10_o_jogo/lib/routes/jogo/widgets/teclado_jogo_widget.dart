@@ -10,7 +10,7 @@ class TecladoJogoWidget extends StatefulWidget {
 }
 
 class _TecladoJogoWidgetState extends State<TecladoJogoWidget> {
-  String letrasParaTeclado = 'ABCDEFGHIJKLMNOPQRSTUWXYZ';
+  String letrasParaTeclado = 'ABCÇDEFGHIJKLMNOPQRSTUWXYZ';
   TecladoStore _tecladoStore;
   JogoStore _jogoStore;
 
@@ -25,7 +25,7 @@ class _TecladoJogoWidgetState extends State<TecladoJogoWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         child: Observer(
           builder: (_) {
             return Wrap(

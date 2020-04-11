@@ -36,5 +36,6 @@ flutter:
   assets:
     - assets/images/splashscreen.png
     - assets/images/drawer/
+    - assets/images/jogo/
     - assets/icons/
     - assets/flare/

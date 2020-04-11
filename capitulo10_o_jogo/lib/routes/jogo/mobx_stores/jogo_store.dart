@@ -14,11 +14,14 @@ class JogoStore = _JogoStore with _$JogoStore;
 
 abstract class _JogoStore with Store {
   List<PalavraModel> _palavrasRegistradas = [];
-
   String palavraAdivinhada = '';
-
-//  @observable
   int quantidadeErros = 0;
+
+  @observable
+  bool ganhou = false;
+
+  @observable
+  bool perdeu = false;
 
   @observable
   String animacaoFlare = 'idle';
@@ -118,5 +121,7 @@ abstract class _JogoStore with Store {
     }
 
     this.palavraAdivinhadaFormatada = _palavraAdivinhadaFormatada();
+
+    if (this.palavraAdivinhada.indexOf('_', 0) < 0) this.ganhou = true;
   }
 }
