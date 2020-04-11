@@ -3,6 +3,7 @@ import 'package:capitulo10ojogo/routes/jogo/mixins/jogo_mixin.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/letra_teclado_jogo_widget.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/teclado_jogo_widget.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -39,7 +40,8 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                     palavra: this._jogoStore.palavraAdivinhadaFormatada),
                 ajudaParaAdivinharAPalavra(
                     ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
-                animacaoDaForca(animacao: 'idle'),
+                animacaoDaForca(
+                    animacao: 'idle'), //this._jogoStore.animacaoFlare),
                 TecladoJogoWidget(),
               ],
             );

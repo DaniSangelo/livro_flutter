@@ -49,21 +49,24 @@ mixin _$JogoStore on _JogoStore, Store {
         name: '${_$ajudaPalavraParaAdivinharAtom.name}_set');
   }
 
-  final _$palavraAdivinhadaAtom = Atom(name: '_JogoStore.palavraAdivinhada');
+  final _$palavraAdivinhadaFormatadaAtom =
+      Atom(name: '_JogoStore.palavraAdivinhadaFormatada');
 
   @override
-  String get palavraAdivinhada {
-    _$palavraAdivinhadaAtom.context.enforceReadPolicy(_$palavraAdivinhadaAtom);
-    _$palavraAdivinhadaAtom.reportObserved();
-    return super.palavraAdivinhada;
+  String get palavraAdivinhadaFormatada {
+    _$palavraAdivinhadaFormatadaAtom.context
+        .enforceReadPolicy(_$palavraAdivinhadaFormatadaAtom);
+    _$palavraAdivinhadaFormatadaAtom.reportObserved();
+    return super.palavraAdivinhadaFormatada;
   }
 
   @override
-  set palavraAdivinhada(String value) {
-    _$palavraAdivinhadaAtom.context.conditionallyRunInAction(() {
-      super.palavraAdivinhada = value;
-      _$palavraAdivinhadaAtom.reportChanged();
-    }, _$palavraAdivinhadaAtom, name: '${_$palavraAdivinhadaAtom.name}_set');
+  set palavraAdivinhadaFormatada(String value) {
+    _$palavraAdivinhadaFormatadaAtom.context.conditionallyRunInAction(() {
+      super.palavraAdivinhadaFormatada = value;
+      _$palavraAdivinhadaFormatadaAtom.reportChanged();
+    }, _$palavraAdivinhadaFormatadaAtom,
+        name: '${_$palavraAdivinhadaFormatadaAtom.name}_set');
   }
 
   final _$_JogoStoreActionController = ActionController(name: '_JogoStore');
@@ -93,7 +96,7 @@ mixin _$JogoStore on _JogoStore, Store {
   @override
   String toString() {
     final string =
-        'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhada: ${palavraAdivinhada.toString()}';
+        'palavraParaAdivinhar: ${palavraParaAdivinhar.toString()},ajudaPalavraParaAdivinhar: ${ajudaPalavraParaAdivinhar.toString()},palavraAdivinhadaFormatada: ${palavraAdivinhadaFormatada.toString()}';
     return '{$string}';
   }
 }
