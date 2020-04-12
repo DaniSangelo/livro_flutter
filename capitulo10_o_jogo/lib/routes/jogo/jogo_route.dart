@@ -15,11 +15,13 @@ class JogoRoute extends StatefulWidget {
 
 class _JogoRouteState extends State<JogoRoute> with JogoMixin {
   JogoStore _jogoStore;
+  Future<bool> _future;
 
   @override
   void initState() {
     super.initState();
     _jogoStore = getIt.get<JogoStore>();
+    _future = myFuture();
   }
 
   @override
@@ -64,16 +66,30 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                       TecladoJogoWidget(),
                     ],
                   )
-                : Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/jogo/vitoria.jpg"),
-                          fit: BoxFit.cover),
-                    ),
-                  );
+                : FutureBuilder<bool>(
+                    future: _future,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState != ConnectionState.waiting) {
+                        return Container();
+                      }
+
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/jogo/vitoria.jpg"),
+                              fit: BoxFit.cover),
+                        ),
+                      );
+                    });
           },
         ),
       ),
     );
+  }
+
+  Future<bool> myFuture() async {
+    await Future.delayed(Duration(seconds: 20));
+    return true;
   }
 }
