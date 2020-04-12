@@ -1,5 +1,6 @@
 import 'package:capitulo10ojogo/appconstants/router_constants.dart';
 import 'package:capitulo10ojogo/routes/jogo/jogo_route.dart';
+import 'package:capitulo10ojogo/routes/jogo/vitoria_route.dart';
 import 'package:capitulo10ojogo/routes/palavras/palavras_crud_route.dart';
 import 'package:capitulo10ojogo/routes/palavras/palavras_listview_route.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,10 @@ class AppRouter {
       case kPalavrasAllRoute:
         return MaterialPageRoute(builder: (_) => PalavrasListViewRoute());
       case kJogoRoute:
+        return MaterialPageRoute(builder: (_) => JogoRoute());
+      case kVitoriaRoute:
+        return MaterialPageRoute(builder: (_) => VitoriaRoute());
+      case kDerrotaRoute:
         return MaterialPageRoute(builder: (_) => JogoRoute());
       default:
         return MaterialPageRoute(
