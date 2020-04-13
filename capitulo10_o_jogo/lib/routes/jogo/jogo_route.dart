@@ -2,7 +2,7 @@ import 'package:capitulo10ojogo/appconstants/router_constants.dart';
 import 'package:capitulo10ojogo/functions/getit_function.dart';
 import 'package:capitulo10ojogo/routes/jogo/mixins/jogo_mixin.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
-import 'package:capitulo10ojogo/routes/jogo/vitoria_route.dart';
+import 'package:capitulo10ojogo/routes/jogo/widgets/vitoria_widget.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/letra_teclado_jogo_widget.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/teclado_jogo_widget.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -54,7 +54,8 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                       palavra: this._jogoStore.palavraAdivinhadaFormatada),
                 ),
                 Visibility(
-                  visible: this._jogoStore.ajudaPalavraParaAdivinhar != null,
+                  visible:
+                      this._jogoStore.palavraAdivinhadaFormatada.isNotEmpty,
                   child: ajudaParaAdivinharAPalavra(
                       ajuda: this._jogoStore.ajudaPalavraParaAdivinhar),
                 ),

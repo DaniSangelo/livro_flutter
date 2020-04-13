@@ -17,6 +17,7 @@ abstract class _TecladoStore with Store {
 
   @action
   inicializarTeclado({String letrasParaTeclado}) {
+    widgetsDeLetrasDoTeclado.clear();
     for (int i = 0; i < letrasParaTeclado.length; i++) {
       widgetsDeLetrasDoTeclado.add(
         LetraTecladoJogoWidget(
