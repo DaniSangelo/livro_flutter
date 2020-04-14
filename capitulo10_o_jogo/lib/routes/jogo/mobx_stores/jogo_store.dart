@@ -54,9 +54,12 @@ abstract class _JogoStore with Store {
       this.animacaoFlare = 'cabeca';
     else if (this.quantidadeErros == 4)
       this.animacaoFlare = 'balanco';
-    else if (this.quantidadeErros == 5)
+    else if (this.quantidadeErros == 5) {
       this.animacaoFlare = 'enforcamento';
-    else if (this.quantidadeErros == 6) this.animacaoFlare = 'balanco';
+      Future.delayed(Duration(seconds: 5)).then((_) {
+        this.perdeu = true;
+      });
+    }
   }
 
   @action

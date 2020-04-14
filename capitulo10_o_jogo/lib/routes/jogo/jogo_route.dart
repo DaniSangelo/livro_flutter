@@ -2,7 +2,7 @@ import 'package:capitulo10ojogo/appconstants/router_constants.dart';
 import 'package:capitulo10ojogo/functions/getit_function.dart';
 import 'package:capitulo10ojogo/routes/jogo/mixins/jogo_mixin.dart';
 import 'package:capitulo10ojogo/routes/jogo/mobx_stores/jogo_store.dart';
-import 'package:capitulo10ojogo/routes/jogo/widgets/vitoria_widget.dart';
+import 'package:capitulo10ojogo/routes/jogo/widgets/jogo_terminou_widget.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/letra_teclado_jogo_widget.dart';
 import 'package:capitulo10ojogo/routes/jogo/widgets/teclado_jogo_widget.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -31,7 +31,16 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
         child: Observer(
           builder: (_) {
             if (this._jogoStore.ganhou) {
-              return VitoriaRoute();
+              return JogoTerminouWidget(
+                urlImagem: "assets/images/jogo/vitoria.jpg",
+                mensagem: 'Parabéns pela vitória. Já retornaremos ao jogo.',
+              );
+            } else if (this._jogoStore.perdeu) {
+              print(1);
+              return JogoTerminouWidget(
+                urlImagem: "assets/images/jogo/derrota.jpg",
+                mensagem: 'Que pena, você perdeu, mas já retornaremos ao jogo.',
+              );
             }
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
