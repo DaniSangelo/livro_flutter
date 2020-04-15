@@ -1,6 +1,8 @@
 import 'package:capitulo10ojogo/appconstants/router_constants.dart';
+import 'package:capitulo10ojogo/local_persistence/daos/palavra_dao.dart';
 import 'package:capitulo10ojogo/widgets/listtile_app_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 class DrawerBodyContentApp extends StatelessWidget {
   @override
@@ -57,9 +59,41 @@ class DrawerBodyContentApp extends StatelessWidget {
           titleText: 'Jogar',
           subtitleText: 'Começar a diversão',
           avatarImage: AssetImage('assets/images/drawer/jogar.png'),
-          onTap: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pushNamed(kJogoRoute);
+          onTap: () async {
+            try {
+              PalavraDAO palavraDAO = PalavraDAO();
+              final List data = await palavraDAO.getAll();
+              if (data.length == 0) {
+                await showDialog(
+                  context: context,
+                  builder: (_) => AssetGiffyDialog(
+                    image: Image.asset(
+                      "assets/gifs/error.gif",
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(
+                      'Não existem palavras registradas',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 22.0, fontWeight: FontWeight.w600),
+                    ),
+                    description: Text(
+                      'Para você poder jogar a forca, você precisa antes registrar algumas palavras',
+                      textAlign: TextAlign.center,
+                    ),
+                    buttonOkText: Text('Ok'),
+                    onlyOkButton: true,
+                    entryAnimation: EntryAnimation.BOTTOM_RIGHT,
+                    onOkButtonPressed: () => Navigator.of(context).pop(),
+                  ),
+                );
+              } else {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(kJogoRoute);
+              }
+            } catch (exception) {
+              rethrow;
+            }
           },
         ),
         _createListTile(

@@ -36,7 +36,6 @@ class _JogoRouteState extends State<JogoRoute> with JogoMixin {
                 mensagem: 'Parabéns pela vitória. Já retornaremos ao jogo.',
               );
             } else if (this._jogoStore.perdeu) {
-              print(1);
               return JogoTerminouWidget(
                 urlImagem: "assets/images/jogo/derrota.jpg",
                 mensagem: 'Que pena, você perdeu, mas já retornaremos ao jogo.',
