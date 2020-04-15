@@ -37,6 +37,12 @@ flutter_native_splash:
   image: assets/images/launchscreen.png
   color: "336699"
 
+# flutter pub run flutter_launcher_icons:main
+flutter_icons:
+  image_path: "assets/images/launchscreen.png"
+  android: true
+  ios: true
+
 flutter:
   uses-material-design: true
 
